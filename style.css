@@ -935,10 +935,10 @@ button:hover {
 /* Calendar dates */
 #appointments-calendar {
   position: absolute;
-  left: 23%;
-  top: 47%;
+  left: 24%;
+  top: 46%;
   width: 28%;
-  height: 30%;
+  height: 35%;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(7, 1fr);
@@ -953,7 +953,7 @@ button:hover {
   background: transparent;
   color: #813447;
   cursor: pointer;
-  font-size: clamp(9px, 1vw, 15px);
+  font-size: clamp(12px, 1.2vw, 19px);
   border-radius: 50%;
 }
 
@@ -976,18 +976,18 @@ button:hover {
 /* Plans panel */
 #appointments-details {
   position: absolute;
-  left: 59%;
+  left: 58%;
   top: 43%;
   width: 25%;
-  height: 32%;
-  padding: 12px;
+  height: 37%;
+  padding: 16px;
   background: #fff2ed;
   border-radius: 12px;
   color: #a52c57;
   text-align: center;
   overflow-y: auto;
   pointer-events: auto;
-  font-size: clamp(10px, 1vw, 16px);
+  font-size: clamp(13px, 1.15vw, 19px);
 }
 
 #appointments-details h3 {
