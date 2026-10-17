@@ -387,3 +387,64 @@ button:hover {
   background: #aaa;
   cursor: not-allowed;
 }
+/* BOOKING CONFIRMED PAGE */
+
+#confirmation-details[hidden],
+#confirmation-home[hidden] {
+  display: none;
+}
+
+/* Covers the old Date / Time / Category table */
+#confirmation-details {
+  position: absolute;
+  left: 40%;
+  top: 49%;
+  width: 20%;
+  height: 21%;
+  z-index: 20;
+
+  background: #ffe4df;
+  border-radius: 15px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.confirmation-info {
+  width: 100%;
+  padding: 10px;
+  color: #a52c57;
+  font-size: clamp(11px, 1vw, 17px);
+  text-align: left;
+}
+
+.confirmation-info div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.confirmation-info span {
+  text-align: right;
+}
+
+/* Clickable area over the existing Back to Home button */
+#confirmation-home {
+  position: absolute;
+  left: 40%;
+  top: 70%;
+  width: 20%;
+  height: 8%;
+  z-index: 25;
+
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+#confirmation-home:hover {
+  background: transparent;
+}

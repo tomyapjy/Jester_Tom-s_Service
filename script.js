@@ -430,8 +430,35 @@ async function submitBooking() {
     document.getElementById("booking-form").hidden = true;
 
     // Display the booking confirmation page
-    image.src = "assets/morning/morning booking confirmed.png";
-    image.alt = "Booking Confirmed";
+image.src = "assets/morning/morning booking confirmed.png";
+image.alt = "Booking Confirmed";
+
+// Format the date selected by the user
+const [year, month, day] = bookingDate.split("-").map(Number);
+
+const formattedDate = new Date(
+  year,
+  month - 1,
+  day
+).toLocaleDateString("en-GB", {
+  day: "numeric",
+  month: "short",
+  year: "numeric"
+});
+
+// Show the actual booking details
+document.getElementById("confirmed-date").textContent =
+  formattedDate;
+
+document.getElementById("confirmed-category").textContent =
+  categories[selectedIndex].name;
+
+// Show the new details and Home button
+document.getElementById("confirmation-details").hidden = false;
+document.getElementById("confirmation-home").hidden = false;
+
+// Hide the old Back button
+document.getElementById("page-back").hidden = true;
 
     // Keep the Back button available
     document.getElementById("page-back").hidden = false;
@@ -448,4 +475,27 @@ async function submitBooking() {
     bookingConfirm.textContent = "Confirm →";
     bookingConfirm.disabled = !bookingDate;
   }
+}
+/* Return to greeting page after booking */
+
+function confirmationHome() {
+  // Hide confirmation overlays
+  document.getElementById("confirmation-details").hidden = true;
+  document.getElementById("confirmation-home").hidden = true;
+
+  // Hide booking form and other controls
+  document.getElementById("booking-form").hidden = true;
+  document.getElementById("page-back").hidden = true;
+  wheelControls.hidden = true;
+
+  // Restore greeting page sizing
+  document.querySelector(".image-wrapper")
+    .classList.remove("booking-page");
+
+  // Return to greeting page
+  image.src = "assets/morning/Morning greetings page.png";
+  image.alt = "Jester Tom's Service Greeting Page";
+
+  getStartedButton.hidden = false;
+  getStartedButton.style.display = "block";
 }
