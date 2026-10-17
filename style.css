@@ -261,3 +261,27 @@ button:hover {
   border-radius: 40px;
   z-index: 15;
 }
+/* FINAL BUTTON ALIGNMENT ADJUSTMENTS */
+
+/* Bottom arrow */
+.wheel-click.down {
+  top: 65%;
+  height: 7%;
+}
+
+/* Surprise Me */
+.wheel-click.surprise {
+  top: 73%;
+  height: 8%;
+}
+
+/* Confirm */
+.wheel-click.confirm {
+  top: 82%;
+  height: 8%;
+}
+
+/* Remove the visible translucent hover boxes */
+.wheel-click:hover {
+  background: transparent;
+}
