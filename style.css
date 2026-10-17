@@ -935,10 +935,10 @@ button:hover {
 /* Calendar dates */
 #appointments-calendar {
   position: absolute;
-  left: 25%;
-  top: 44%;
-  width: 27%;
-  height: 39%;
+  left: 24%;
+  top: 41%;
+  width: 29%;
+  height: 43%;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(7, 1fr);
@@ -977,11 +977,10 @@ button:hover {
 #appointments-details {
   position: absolute;
 
-  left: 57%;
-  top: 42%;
-
-  width: 26%;
-  height: 42%;
+  left: 56%;
+  top: 40%;
+  width: 27%;
+  height: 46%;  
 
   padding: 20px;
 
