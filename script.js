@@ -91,19 +91,25 @@ function moveWheel(direction) {
   buildWheel();
 }
 
-/* Dragging the wheel */
+/* Dragging and tapping the wheel */
+
+let tappedRow = null;
+let pointerMoved = false;
+
 wheelWindow.addEventListener("pointerdown", event => {
   if (spinning || wheelControls.hidden) return;
 
   dragging = true;
+  pointerMoved = false;
+
   dragStartY = event.clientY;
   dragDistance = 0;
   dragSteps = 0;
 
+  tappedRow = event.target.closest(".wheel-option");
+
   wheelWindow.setPointerCapture(event.pointerId);
   wheelWindow.style.cursor = "grabbing";
-
-  event.preventDefault();
 });
 
 wheelWindow.addEventListener("pointermove", event => {
@@ -111,41 +117,64 @@ wheelWindow.addEventListener("pointermove", event => {
 
   dragDistance = event.clientY - dragStartY;
 
-  const height = rowHeight();
+  if (Math.abs(dragDistance) > 8) {
+    pointerMoved = true;
+  }
 
-  // Determine how many complete rows have been dragged.
+  if (!pointerMoved) return;
+
+  const height = rowHeight();
   const steps = Math.round(-dragDistance / height);
 
   if (steps !== dragSteps) {
-    selectedIndex = wrapIndex(selectedIndex + steps - dragSteps);
+    selectedIndex = wrapIndex(
+      selectedIndex + steps - dragSteps
+    );
+
     dragSteps = steps;
   }
 
-  // Keep the wheel moving directly with the mouse.
   const remainder = dragDistance + dragSteps * height;
 
   buildWheel(remainder);
 });
 
-function finishDrag() {
+wheelWindow.addEventListener("pointerup", event => {
   if (!dragging) return;
 
   dragging = false;
   wheelWindow.style.cursor = "grab";
 
-  const height = rowHeight();
-  const remainder = dragDistance + dragSteps * height;
+  // If the mouse did not move, treat it as a tap.
+  if (!pointerMoved && tappedRow) {
+    const rows = Array.from(wheelTrack.children);
+    const position = rows.indexOf(tappedRow);
 
-  // Settle smoothly on the selected row.
-  wheelTrack.style.transition = "transform 180ms ease-out";
-  wheelTrack.style.transform = `translateY(${-2 * height}px)`;
+    if (position !== -1) {
+      selectedIndex = wrapIndex(
+        selectedIndex + position - 3
+      );
+    }
 
+    buildWheel();
+  } else {
+    buildWheel();
+  }
+
+  tappedRow = null;
+  pointerMoved = false;
   dragDistance = 0;
   dragSteps = 0;
-}
+});
 
-wheelWindow.addEventListener("pointerup", finishDrag);
-wheelWindow.addEventListener("pointercancel", finishDrag);
+wheelWindow.addEventListener("pointercancel", () => {
+  dragging = false;
+  tappedRow = null;
+  pointerMoved = false;
+  wheelWindow.style.cursor = "grab";
+
+  buildWheel();
+});
 
 /* Mouse wheel scrolling */
 wheelWindow.addEventListener("wheel", event => {
@@ -160,28 +189,6 @@ wheelWindow.addEventListener("wheel", event => {
 
   moveWheel(direction * amount);
 }, { passive: false });
-
-/* Tap or click a category to select it directly */
-wheelTrack.addEventListener("click", event => {
-  if (spinning || dragging || wheelControls.hidden) return;
-
-  const row = event.target.closest(".wheel-option");
-  if (!row) return;
-
-  const rows = Array.from(wheelTrack.children);
-  const position = rows.indexOf(row);
-
-  // The selected category is the fourth generated row.
-  const difference = position - 3;
-
-  if (difference === 0) return;
-
-  // Select the tapped category immediately.
-  selectedIndex = wrapIndex(selectedIndex + difference);
-
-  // Refresh the wheel and highlight the new selection.
-  buildWheel();
-});
 
 /* Surprise Me: spin before selecting a random date */
 async function surpriseMe() {
