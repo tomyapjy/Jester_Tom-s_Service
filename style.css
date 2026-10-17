@@ -29,18 +29,35 @@ button:hover {
   box-sizing: border-box;
 }
 
+
+/* Responsive page sizing */
+
 .page-container {
   width: 100%;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
 .page-background {
   display: block;
   width: 100%;
   height: auto;
-  max-height: 100vh;
+  max-height: none;
   object-fit: contain;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .page-container {
+    min-height: 100dvh;
+  }
+
+  .page-background {
+    width: 100%;
+    height: auto;
+  }
 }
