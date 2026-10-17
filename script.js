@@ -3,9 +3,9 @@
 
 const categories = [
   { name: "Massage appointment", icon: "🌸" },
-  { name: "Outing date", icon: "🏕️" },
-  { name: "Indoor date", icon: "🏠" },
-  { name: "Food date", icon: "🍴" }
+  { name: "Outing", icon: "🏕️" },
+  { name: "Indoor hangout", icon: "🏠" },
+  { name: "Food outing", icon: "🍴" }
 ];
 
 let selectedIndex = 1;
