@@ -654,3 +654,10 @@ button:hover {
     border: none;
   }
 }
+/* Indoor Hangout Back button adjustment ONLY */
+
+@media (min-width: 769px) {
+  .image-wrapper.indoor-page #page-back:not([hidden]) {
+    top: 12%;
+  }
+}

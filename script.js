@@ -386,6 +386,7 @@ function confirmSelection() {
   image.alt = categories[selectedIndex].name;
 
   wrapper.classList.add("booking-page");
+  wrapper.classList.toggle("indoor-page", selectedIndex === 2);
 
   wheelControls.hidden = true;
   getStartedButton.hidden = true;
