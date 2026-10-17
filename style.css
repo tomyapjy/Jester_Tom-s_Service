@@ -301,3 +301,23 @@ body {
   outline: 10px solid red !important;
   outline-offset: -10px;
 }
+/* FINAL HOTSPOT POSITION CORRECTIONS */
+
+.wheel-click.down {
+  top: 67%;
+  height: 7%;
+}
+
+.wheel-click.surprise {
+  left: 38.5%;
+  top: 72%;
+  width: 23%;
+  height: 8%;
+}
+
+.wheel-click.confirm {
+  left: 38.5%;
+  top: 81%;
+  width: 23%;
+  height: 8%;
+}
