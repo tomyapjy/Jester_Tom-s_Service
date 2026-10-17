@@ -23,8 +23,10 @@ const wheelControls = document.getElementById("wheel-controls");
 const wheelTrack = document.getElementById("wheel-track");
 const wheelWindow = document.querySelector(".wheel-window");
 
-wheelWindow.style.cursor = "grab";
-wheelWindow.style.touchAction = "none";
+if (wheelWindow) {
+  wheelWindow.style.cursor = "grab";
+  wheelWindow.style.touchAction = "none";
+}
 
 function wrapIndex(index) {
   return ((index % categories.length) + categories.length)
@@ -36,6 +38,7 @@ function rowHeight() {
 }
 
 function showWheel() {
+  console.log("Get Started clicked");
   document.querySelector(".image-wrapper").classList.remove("booking-page");
   image.src = "assets/morning/morning wheels page.png";
   image.alt = "Jester Tom's Service Selection Wheel";
