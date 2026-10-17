@@ -287,15 +287,13 @@ button:hover {
 }
 /* BUTTON ALIGNMENT DEBUGGING */
 
-#wheel-controls .wheel-click {
-  background: transparent !important;
-  border: 2px solid red !important;
-  box-shadow: none !important;
+.wheel-click {
+  background: rgba(255, 0, 0, 0.35) !important;
+  border: 3px solid red !important;
+  box-shadow: 0 0 0 2px yellow !important;
   opacity: 1 !important;
 }
 
-#wheel-controls .wheel-click:hover {
-  background: transparent !important;
-  border: 2px solid red !important;
-  box-shadow: none !important;
+.wheel-click:hover {
+  background: rgba(255, 0, 0, 0.5) !important;
 }
