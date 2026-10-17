@@ -32,6 +32,41 @@
   aria-label="Back to selection wheel"
   hidden
 ></button>
+<div id="booking-form" hidden>
+  <div class="booking-card">
+    <h2 id="booking-title">Choose a date</h2>
+
+    <div class="booking-navigation">
+      <button type="button" onclick="changeBookingMonth(-1)">‹</button>
+
+      <select id="booking-month" aria-label="Month"></select>
+      <select id="booking-year" aria-label="Year"></select>
+
+      <button type="button" onclick="changeBookingMonth(1)">›</button>
+    </div>
+
+    <div id="booking-calendar" class="booking-calendar"></div>
+
+    <label for="booking-comments">Any suggestions?</label>
+    <textarea
+      id="booking-comments"
+      maxlength="200"
+      rows="3"
+      placeholder="Anywhere you've wanted to go?"
+    ></textarea>
+
+    <div id="booking-count">0/200</div>
+
+    <button
+      id="booking-confirm"
+      type="button"
+      onclick="submitBooking()"
+      disabled
+    >
+      Confirm →
+    </button>
+  </div>
+</div>
 
 <div id="wheel-controls" hidden>
 

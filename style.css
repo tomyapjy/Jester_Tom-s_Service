@@ -271,3 +271,119 @@ button:hover {
 #page-back[hidden] {
   display: none;
 }
+/* WORKING BOOKING FORM */
+
+#booking-form[hidden] {
+  display: none;
+}
+
+#booking-form {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8% 14%;
+}
+
+.booking-card {
+  width: min(100%, 560px);
+  max-height: 85%;
+  overflow-y: auto;
+  background: #fff7f5;
+  border: 2px solid #ffb0c2;
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: 0 8px 30px #0002;
+  text-align: center;
+}
+
+.booking-card h2 {
+  margin: 0 0 12px;
+  color: #d93c72;
+  font-size: clamp(15px, 2vw, 24px);
+}
+
+.booking-navigation {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.booking-navigation select {
+  min-width: 0;
+  flex: 1;
+  padding: 7px 4px;
+  border: 1px solid #ffb0c2;
+  border-radius: 10px;
+  background: white;
+}
+
+.booking-navigation button {
+  padding: 5px 12px;
+}
+
+.booking-calendar {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.booking-calendar .weekday {
+  font-size: 12px;
+  font-weight: bold;
+  padding: 5px 0;
+}
+
+.booking-calendar button {
+  padding: 8px 0;
+  border-radius: 8px;
+  background: #ffe6ed;
+  font-size: 13px;
+}
+
+.booking-calendar button.chosen {
+  background: #f45189;
+  color: white;
+}
+
+.booking-calendar button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.booking-card label {
+  display: block;
+  text-align: left;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+#booking-comments {
+  width: 100%;
+  resize: vertical;
+  border: 1px solid #ffb0c2;
+  border-radius: 10px;
+  padding: 10px;
+  font-family: inherit;
+}
+
+#booking-count {
+  text-align: right;
+  font-size: 12px;
+  margin: 4px 0 10px;
+}
+
+#booking-confirm {
+  width: 100%;
+  background: #f45189;
+  color: white;
+}
+
+#booking-confirm:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}

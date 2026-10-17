@@ -243,6 +243,7 @@ document.querySelector(".image-wrapper").classList.add("booking-page");
 
   // Keep the Back button available on the selected page.
   document.getElementById("page-back").hidden = false;
+  openBookingForm();
 }
 
 /* Return to the greeting page */
@@ -260,6 +261,148 @@ function goBack() {
   getStartedButton.style.display = "block";
 }
 function backToWheel() {
+  document.getElementById("booking-form").hidden = true;
   document.getElementById("page-back").hidden = true;
   showWheel();
+}
+/* INTERACTIVE BOOKING CALENDAR */
+
+const bookingMonths = [
+  "January", "February", "March", "April",
+  "May", "June", "July", "August",
+  "September", "October", "November", "December"
+];
+
+let bookingMonth = new Date().getMonth();
+let bookingYear = new Date().getFullYear();
+let bookingDate = null;
+
+const monthSelect = document.getElementById("booking-month");
+const yearSelect = document.getElementById("booking-year");
+const bookingCalendar = document.getElementById("booking-calendar");
+const bookingComments = document.getElementById("booking-comments");
+const bookingConfirm = document.getElementById("booking-confirm");
+
+bookingMonths.forEach((month, index) => {
+  monthSelect.add(new Option(month, index));
+});
+
+for (let year = 2026; year <= 2040; year++) {
+  yearSelect.add(new Option(year, year));
+}
+
+function openBookingForm() {
+  const form = document.getElementById("booking-form");
+
+  bookingDate = null;
+  bookingComments.value = "";
+  document.getElementById("booking-count").textContent = "0/200";
+
+  const today = new Date();
+  bookingYear = Math.max(2026, Math.min(2040, today.getFullYear()));
+  bookingMonth = today.getMonth();
+
+  document.getElementById("booking-title").textContent =
+    categories[selectedIndex].name;
+
+  bookingConfirm.disabled = true;
+  form.hidden = false;
+
+  renderBookingCalendar();
+}
+
+function renderBookingCalendar() {
+  monthSelect.value = bookingMonth;
+  yearSelect.value = bookingYear;
+
+  bookingCalendar.innerHTML = "";
+
+  const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+  weekdays.forEach(day => {
+    const heading = document.createElement("div");
+    heading.className = "weekday";
+    heading.textContent = day;
+    bookingCalendar.appendChild(heading);
+  });
+
+  const firstDay = new Date(bookingYear, bookingMonth, 1);
+  const daysInMonth = new Date(bookingYear, bookingMonth + 1, 0).getDate();
+
+  const offset = (firstDay.getDay() + 6) % 7;
+
+  for (let i = 0; i < offset; i++) {
+    bookingCalendar.appendChild(document.createElement("div"));
+  }
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const button = document.createElement("button");
+
+    button.type = "button";
+    button.textContent = day;
+
+    const dateString =
+      `${bookingYear}-${String(bookingMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+
+    if (bookingDate === dateString) {
+      button.classList.add("chosen");
+    }
+
+    button.addEventListener("click", () => {
+      bookingDate = dateString;
+      bookingConfirm.disabled = false;
+      renderBookingCalendar();
+    });
+
+    bookingCalendar.appendChild(button);
+  }
+}
+
+function changeBookingMonth(direction) {
+  const next = new Date(bookingYear, bookingMonth + direction, 1);
+
+  if (next.getFullYear() < 2026 || next.getFullYear() > 2040) {
+    return;
+  }
+
+  bookingYear = next.getFullYear();
+  bookingMonth = next.getMonth();
+
+  bookingDate = null;
+  bookingConfirm.disabled = true;
+
+  renderBookingCalendar();
+}
+
+monthSelect.addEventListener("change", () => {
+  bookingMonth = Number(monthSelect.value);
+  bookingDate = null;
+  bookingConfirm.disabled = true;
+  renderBookingCalendar();
+});
+
+yearSelect.addEventListener("change", () => {
+  bookingYear = Number(yearSelect.value);
+  bookingDate = null;
+  bookingConfirm.disabled = true;
+  renderBookingCalendar();
+});
+
+bookingComments.addEventListener("input", () => {
+  document.getElementById("booking-count").textContent =
+    `${bookingComments.value.length}/200`;
+});
+
+function submitBooking() {
+  if (!bookingDate) return;
+
+  const category = categories[selectedIndex].name;
+  const comments = bookingComments.value.trim();
+
+  alert(
+    `Booking details:\n\n` +
+    `Category: ${category}\n` +
+    `Date: ${bookingDate}\n` +
+    `Comments: ${comments || "None"}`
+  );
 }
