@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jester Tom's Service</title>
-  <link rel="stylesheet" href="style.css?v=13">
+  <link rel="stylesheet" href="style.css?v=14">
 </head>
 
 <body>
@@ -19,6 +19,23 @@
         alt="Jester Tom's Service"
       >
 
+      <!-- Appointments navigation hotspot -->
+        <button
+         id="appointments-link"
+          type="button"
+          onclick="showAppointments()"
+          aria-label="View Appointments"
+          hidden
+          ></button>
+
+<!-- Appointments page Back button -->
+<button
+  id="appointments-back"
+  type="button"
+  onclick="backFromAppointments()"
+  aria-label="Back to previous page"
+  hidden
+></button>
       <!-- Greeting page -->
       <button
         id="get-started"

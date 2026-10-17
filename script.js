@@ -666,3 +666,66 @@ async function submitBooking() {
     bookingConfirm.disabled = !bookingDate;
   }
 }
+/* =====================================
+   APPOINTMENTS PAGE NAVIGATION
+   ===================================== */
+
+const appointmentsLink =
+  document.getElementById("appointments-link");
+
+const appointmentsBack =
+  document.getElementById("appointments-back");
+
+const APPOINTMENTS_MORNING =
+  "assets/morning/morning apt WO.png";
+
+const APPOINTMENTS_NIGHT =
+  "assets/night/night apt WO.png";
+
+let previousAppointmentsPage = null;
+
+// Show the Appointments page
+function showAppointments() {
+  previousAppointmentsPage = image.src;
+
+  const isNight =
+    image.src.includes("assets/night/");
+
+  image.src = isNight
+    ? APPOINTMENTS_NIGHT
+    : APPOINTMENTS_MORNING;
+
+  image.alt = "Appointments";
+
+  bookingForm.hidden = true;
+  wheelControls.hidden = true;
+  getStartedButton.hidden = true;
+  pageBack.hidden = true;
+
+  hideConfirmation();
+
+  appointmentsLink.hidden = true;
+  appointmentsBack.hidden = false;
+
+  wrapper.classList.add("appointments-page");
+}
+
+// Return to the previous page
+function backFromAppointments() {
+  appointmentsBack.hidden = true;
+
+  wrapper.classList.remove("appointments-page");
+
+  if (
+    previousAppointmentsPage &&
+    previousAppointmentsPage.includes("wheels")
+  ) {
+    showWheel();
+  } else {
+    showGreeting();
+  }
+
+  updateAppointmentsLink();
+}
+
+// Show the Appointments icon on supported
