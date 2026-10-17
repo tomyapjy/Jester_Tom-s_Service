@@ -259,3 +259,40 @@ button:hover {
   user-select: none;
   -webkit-user-select: none;
 }
+/* FINAL WHEEL BUTTON ALIGNMENT */
+
+/* Up arrow */
+.wheel-click.up {
+  left: 47.6%;
+  top: 15%;
+  width: 5.2%;
+  height: 8%;
+  border-radius: 50%;
+}
+
+/* Down arrow */
+.wheel-click.down {
+  left: 47.6%;
+  top: 69%;
+  width: 5.2%;
+  height: 5%;
+  border-radius: 50%;
+}
+
+/* Surprise Me */
+.wheel-click.surprise {
+  left: 38%;
+  top: 77%;
+  width: 24%;
+  height: 8%;
+  border-radius: 40px;
+}
+
+/* Confirm */
+.wheel-click.confirm {
+  left: 38%;
+  top: 86%;
+  width: 24%;
+  height: 8%;
+  border-radius: 40px;
+}
