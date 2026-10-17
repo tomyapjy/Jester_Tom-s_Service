@@ -386,9 +386,15 @@ function confirmSelection() {
   image.alt = categories[selectedIndex].name;
 
   wrapper.classList.add("booking-page");
-  wrapper.classList.toggle("outing-page", selectedIndex === 1);
-  wrapper.classList.toggle("indoor-page", selectedIndex === 2);
-  wrapper.classList.toggle("food-page", selectedIndex === 3);
+  wrapper.classList.remove("outing-page", "indoor-page", "food-page");
+
+  if (selectedIndex === 1) {
+  wrapper.classList.add("outing-page");
+  } else if (selectedIndex === 2) {
+  wrapper.classList.add("indoor-page");
+  } else if (selectedIndex === 3) {
+  wrapper.classList.add("food-page");
+  }
   
 
   wheelControls.hidden = true;
