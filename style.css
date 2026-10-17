@@ -851,3 +851,19 @@ button:hover {
   max-height: 100dvh;
   object-fit: contain;
 }
+/* Appointments page — Back button alignment only */
+
+.image-wrapper.appointments-page #appointments-back:not([hidden]) {
+  position: absolute;
+  left: 4.5%;
+  top: 18%;
+  width: 11%;
+  height: 9%;
+  transform: none;
+  z-index: 9999;
+  pointer-events: auto;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
