@@ -378,7 +378,12 @@ button:hover {
   border-radius: 15px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+}
+
+/* Move Date and Category upward */
+#confirmation-details .confirmation-info {
+  padding-top: 15px;
 }
 
 .confirmation-info {
