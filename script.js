@@ -93,7 +93,7 @@ function moveWheel(direction) {
 
 /* Dragging and tapping the wheel */
 
-let tappedRow = null;
+let tappedIndex = -1;
 let pointerMoved = false;
 
 wheelWindow.addEventListener("pointerdown", event => {
@@ -106,16 +106,20 @@ wheelWindow.addEventListener("pointerdown", event => {
   dragDistance = 0;
   dragSteps = 0;
 
-  const rect = wheelWindow.getBoundingClientRect();
-const tapY = event.clientY - rect.top;
+  /* Identify the actual option underneath the pointer */
 
-const visibleRow = Math.max(
-  0,
-  Math.min(3, Math.floor(tapY / rowHeight()))
+const options = Array.from(
+  wheelTrack.querySelectorAll(".wheel-option")
 );
 
-// Map the tapped area to its corresponding wheel option.
-tappedRow = wheelTrack.children[visibleRow + 2] || null;
+tappedIndex = options.findIndex(option => {
+  const rect = option.getBoundingClientRect();
+
+  return (
+    event.clientY >= rect.top &&
+    event.clientY < rect.bottom
+  );
+});
 
   wheelWindow.setPointerCapture(event.pointerId);
   wheelWindow.style.cursor = "grabbing";
@@ -155,22 +159,15 @@ wheelWindow.addEventListener("pointerup", event => {
   wheelWindow.style.cursor = "grab";
 
   // If the mouse did not move, treat it as a tap.
-  if (!pointerMoved && tappedRow) {
-    const rows = Array.from(wheelTrack.children);
-    const position = rows.indexOf(tappedRow);
+  if (!pointerMoved && tappedIndex !== -1) {
+  selectedIndex = wrapIndex(
+    selectedIndex + tappedIndex - 3
+  );
+}
 
-    if (position !== -1) {
-      selectedIndex = wrapIndex(
-        selectedIndex + position - 3
-      );
-    }
+buildWheel();
 
-    buildWheel();
-  } else {
-    buildWheel();
-  }
-
-  tappedRow = null;
+  tappedIndex = -1;
   pointerMoved = false;
   dragDistance = 0;
   dragSteps = 0;
@@ -178,7 +175,7 @@ wheelWindow.addEventListener("pointerup", event => {
 
 wheelWindow.addEventListener("pointercancel", () => {
   dragging = false;
-  tappedRow = null;
+  tappedIndex = -1;
   pointerMoved = false;
   wheelWindow.style.cursor = "grab";
 
