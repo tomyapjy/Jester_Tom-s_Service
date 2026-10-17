@@ -789,12 +789,12 @@ button:hover {
   display: none !important;
 }
 
-/* Greeting page: bottom-right Appointments button */
+/* Greeting page — corrected Appointments hotspot */
 #appointments-link.appointments-greeting {
   left: 56%;
-  top: 81%;
+  top: 73%;
   width: 15%;
-  height: 9%;
+  height: 7%;
 }
 
 /* Wheel page: right-side Appointments icon */
