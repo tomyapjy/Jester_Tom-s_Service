@@ -728,4 +728,30 @@ function backFromAppointments() {
   updateAppointmentsLink();
 }
 
-// Show the Appointments icon on supported
+// Show the Appointments icon on supported pages
+function updateAppointmentsLink() {
+  const currentImage = image.src.toLowerCase();
+
+  const isGreeting = currentImage.includes("greeting");
+  const isWheel = currentImage.includes("wheels");
+  const isConfirmation = currentImage.includes("booking confirmed");
+
+  appointmentsLink.hidden = !(
+    isGreeting || isWheel || isConfirmation
+  );
+
+  appointmentsLink.classList.toggle(
+    "appointments-greeting", isGreeting
+  );
+
+  appointmentsLink.classList.toggle(
+    "appointments-wheel", isWheel
+  );
+
+  appointmentsLink.classList.toggle(
+    "appointments-confirmation", isConfirmation
+  );
+}
+
+image.addEventListener("load", updateAppointmentsLink);
+updateAppointmentsLink();
