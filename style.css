@@ -935,8 +935,8 @@ button:hover {
 /* Calendar dates */
 #appointments-calendar {
   position: absolute;
-  left: 24%;
-  top: 41%;
+  left: 21%;
+  top: 37%;
   width: 29%;
   height: 43%;
   display: grid;
