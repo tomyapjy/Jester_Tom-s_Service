@@ -616,3 +616,26 @@ button:hover {
   }
 
 }
+
+/* FORCE BOOKING PAGE TO FILL DESKTOP SCREEN */
+
+@media (min-width: 769px) {
+
+  .page-container .image-wrapper.booking-page {
+    width: 100vw !important;
+    height: 100dvh !important;
+    max-width: none !important;
+    max-height: none !important;
+    overflow: hidden;
+  }
+
+  .page-container .image-wrapper.booking-page img.page-background {
+    display: block;
+    width: 100vw !important;
+    height: 100dvh !important;
+    max-width: none !important;
+    max-height: none !important;
+    object-fit: fill !important;
+  }
+
+}
