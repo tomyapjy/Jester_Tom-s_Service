@@ -161,7 +161,7 @@ wheelWindow.addEventListener("wheel", event => {
   moveWheel(direction * amount);
 }, { passive: false });
 
-/* Click a category directly */
+/* Tap or click a category to select it directly */
 wheelTrack.addEventListener("click", event => {
   if (spinning || dragging || wheelControls.hidden) return;
 
@@ -174,9 +174,13 @@ wheelTrack.addEventListener("click", event => {
   // The selected category is the fourth generated row.
   const difference = position - 3;
 
-  if (difference !== 0) {
-    moveWheel(difference);
-  }
+  if (difference === 0) return;
+
+  // Select the tapped category immediately.
+  selectedIndex = wrapIndex(selectedIndex + difference);
+
+  // Refresh the wheel and highlight the new selection.
+  buildWheel();
 });
 
 /* Surprise Me: spin before selecting a random date */
