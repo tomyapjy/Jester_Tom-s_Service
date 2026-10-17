@@ -548,3 +548,46 @@ button:hover {
   }
 
 }
+
+/* =====================================
+   DESKTOP BOOKING FORM SIZE FIX
+   ===================================== */
+
+@media (min-width: 769px) {
+
+  #booking-form:not([hidden]) {
+    padding: 2% 8%;
+    align-items: center;
+  }
+
+  #booking-form .booking-card {
+    width: 85%;
+    max-width: 950px;
+    max-height: 95%;
+    padding: 18px 24px;
+  }
+
+  #booking-form .booking-card h2 {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+
+  #booking-form .booking-calendar {
+    gap: 5px;
+    margin-bottom: 12px;
+  }
+
+  #booking-form .booking-calendar button {
+    padding: 9px 0;
+    font-size: 15px;
+  }
+
+  #booking-form #booking-comments {
+    min-height: 70px;
+  }
+
+  #booking-form #booking-confirm {
+    min-height: 48px;
+    font-size: 16px;
+  }
+}
