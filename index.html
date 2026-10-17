@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,17 +15,43 @@
         id="page-image"
         class="page-background"
         src="assets/morning/Morning greetings page.png"
-        alt="Jester Tom's Service Greeting Page"
+        alt="Jester Tom's Service"
       >
 
       <button
         id="get-started"
         class="image-hotspot"
-        type="button"
-        aria-label="Get Started"
         onclick="showWheel()"
+        aria-label="Get Started"
       ></button>
 
+      <div id="wheel-controls" hidden>
+
+        <div class="wheel-window">
+          <div id="wheel-track"></div>
+        </div>
+
+        <button class="wheel-click up"
+                onclick="moveWheel(-1)"
+                aria-label="Scroll up"></button>
+
+        <button class="wheel-click down"
+                onclick="moveWheel(1)"
+                aria-label="Scroll down"></button>
+
+        <button class="wheel-click surprise"
+                onclick="surpriseMe()"
+                aria-label="Surprise me"></button>
+
+        <button class="wheel-click confirm"
+                onclick="confirmSelection()"
+                aria-label="Confirm"></button>
+
+        <button class="wheel-click back"
+                onclick="goBack()"
+                aria-label="Back"></button>
+
+      </div>
     </div>
   </main>
 
