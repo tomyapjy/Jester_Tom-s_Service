@@ -829,16 +829,16 @@ button:hover {
 }
 
 
-/* SHARED APPOINTMENTS PAGE — LARGER SIZE */
+/* SHARED APPOINTMENTS PAGE — NEAR FULL SCREEN */
 
 .image-wrapper.appointments-page {
   position: relative;
   display: block;
   flex: none;
-  width: min(96vw, 1500px);
+  width: 98vw;
   height: auto;
-  max-width: 96vw;
-  max-height: 92dvh;
+  max-width: 98vw;
+  max-height: 98dvh;
 }
 
 .image-wrapper.appointments-page img.page-background {
@@ -846,9 +846,10 @@ button:hover {
   width: 100%;
   height: auto;
   max-width: 100%;
-  max-height: 92dvh;
+  max-height: 98dvh;
   object-fit: contain;
 }
+
 /* Appointments page — Back button alignment only */
 
 .image-wrapper.appointments-page #appointments-back:not([hidden]) {
