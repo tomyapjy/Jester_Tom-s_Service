@@ -9,16 +9,27 @@
 </head>
 
 <body>
-
   <main class="page-container">
-    <img
-      class="page-background"
-      src="assets/morning/Morning greetings page.png"
-      alt="Jester Tom's Service Greeting Page"
-    >
+    <div class="image-wrapper">
+
+      <img
+        id="page-image"
+        class="page-background"
+        src="assets/morning/Morning greetings page.png"
+        alt="Jester Tom's Service Greeting Page"
+      >
+
+      <button
+        id="get-started"
+        class="image-hotspot"
+        type="button"
+        aria-label="Get Started"
+        onclick="showWheel()"
+      ></button>
+
+    </div>
   </main>
 
   <script src="script.js"></script>
-
 </body>
 </html>
