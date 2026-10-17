@@ -235,7 +235,11 @@ function confirmSelection() {
   image.src = pages[selectedIndex];
   image.alt = categories[selectedIndex].name;
 
+  // Hide the wheel and its buttons.
   wheelControls.hidden = true;
+
+  // Keep the Back button available on the selected page.
+  document.getElementById("page-back").hidden = false;
 }
 
 /* Return to the greeting page */
@@ -251,4 +255,8 @@ function goBack() {
 
   getStartedButton.hidden = false;
   getStartedButton.style.display = "block";
+}
+function backToWheel() {
+  document.getElementById("page-back").hidden = true;
+  showWheel();
 }

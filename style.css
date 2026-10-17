@@ -249,3 +249,6 @@ button:hover {
 .wheel-option:active {
   filter: brightness(0.97);
 }
+#page-back[hidden] {
+  display: none;
+}
