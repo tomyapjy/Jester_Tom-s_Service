@@ -22,3 +22,25 @@ button {
 button:hover {
   background-color: #ff91a4;
 }
+
+/* Consistent image sizing for all pages */
+
+* {
+  box-sizing: border-box;
+}
+
+.page-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-background {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 100vh;
+  object-fit: contain;
+}
