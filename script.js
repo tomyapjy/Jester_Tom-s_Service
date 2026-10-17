@@ -201,3 +201,40 @@ wheelWindow.addEventListener(
   },
   { passive: true }
 );
+/* Mouse drag support for the selection wheel */
+
+let dragStartY = null;
+let isDraggingWheel = false;
+
+wheelWindow.style.cursor = "grab";
+wheelWindow.style.touchAction = "none";
+
+wheelWindow.addEventListener("pointerdown", event => {
+  if (spinning || wheelControls.hidden) return;
+
+  dragStartY = event.clientY;
+  isDraggingWheel = true;
+
+  wheelWindow.setPointerCapture(event.pointerId);
+  wheelWindow.style.cursor = "grabbing";
+});
+
+wheelWindow.addEventListener("pointerup", event => {
+  if (!isDraggingWheel || dragStartY === null) return;
+
+  const distance = dragStartY - event.clientY;
+
+  isDraggingWheel = false;
+  dragStartY = null;
+  wheelWindow.style.cursor = "grab";
+
+  if (Math.abs(distance) > 20) {
+    moveWheel(distance > 0 ? 1 : -1);
+  }
+});
+
+wheelWindow.addEventListener("pointercancel", () => {
+  isDraggingWheel = false;
+  dragStartY = null;
+  wheelWindow.style.cursor = "grab";
+});
