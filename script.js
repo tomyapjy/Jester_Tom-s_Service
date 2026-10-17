@@ -708,6 +708,7 @@ function showAppointments() {
   appointmentsLink.hidden = true;
   appointmentsBack.hidden = false;
 
+  wrapper.classList.remove("booking-page");
   wrapper.classList.add("appointments-page");
 }
 
