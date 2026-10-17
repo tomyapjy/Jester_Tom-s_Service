@@ -393,16 +393,59 @@ bookingComments.addEventListener("input", () => {
     `${bookingComments.value.length}/200`;
 });
 
-function submitBooking() {
-  if (!bookingDate) return;
+/* CONNECT WEBSITE TO SUPABASE */
 
-  const category = categories[selectedIndex].name;
-  const comments = bookingComments.value.trim();
+const BOOKING_FUNCTION_URL =
+  "https://kmmogejcdhnxfptjwent.supabase.co/functions/v1/submit-booking";
 
-  alert(
-    `Booking details:\n\n` +
-    `Category: ${category}\n` +
-    `Date: ${bookingDate}\n` +
-    `Comments: ${comments || "None"}`
-  );
+let bookingSubmitting = false;
+
+async function submitBooking() {
+  if (!bookingDate || bookingSubmitting) return;
+
+  bookingSubmitting = true;
+  bookingConfirm.disabled = true;
+  bookingConfirm.textContent = "Submitting...";
+
+  try {
+    const response = await fetch(BOOKING_FUNCTION_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        category: categories[selectedIndex].name,
+        booking_date: bookingDate,
+        comments: bookingComments.value.trim()
+      })
+    });
+
+    const result = await response.json();
+
+    if (!response.ok || result.success !== true) {
+      throw new Error(result.error || "Submission failed");
+    }
+
+    // Hide the booking calendar
+    document.getElementById("booking-form").hidden = true;
+
+    // Display the booking confirmation page
+    image.src = "assets/morning/morning booking confirmed.png";
+    image.alt = "Booking Confirmed";
+
+    // Keep the Back button available
+    document.getElementById("page-back").hidden = false;
+
+  } catch (error) {
+    console.error(error);
+
+    alert(
+      "Booking could not be submitted. Please try again."
+    );
+
+  } finally {
+    bookingSubmitting = false;
+    bookingConfirm.textContent = "Confirm →";
+    bookingConfirm.disabled = !bookingDate;
+  }
 }
