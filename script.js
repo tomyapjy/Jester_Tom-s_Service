@@ -36,6 +36,7 @@ function rowHeight() {
 }
 
 function showWheel() {
+  document.querySelector(".image-wrapper").classList.remove("booking-page");
   image.src = "assets/morning/morning wheels page.png";
   image.alt = "Jester Tom's Service Selection Wheel";
 
@@ -234,6 +235,8 @@ function confirmSelection() {
 
   image.src = pages[selectedIndex];
   image.alt = categories[selectedIndex].name;
+  // Enlarge the selected booking page.
+document.querySelector(".image-wrapper").classList.add("booking-page");
 
   // Hide the wheel and its buttons.
   wheelControls.hidden = true;

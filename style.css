@@ -72,6 +72,18 @@ button:hover {
   object-fit: contain;
 }
 
+/* Make booking pages fill more of the screen */
+.image-wrapper.booking-page {
+  width: min(100vw, 177.78dvh);
+  max-width: 100%;
+}
+
+.image-wrapper.booking-page .page-background {
+  width: 100%;
+  height: auto;
+  max-height: 100dvh;
+}
+
 /* =====================================
    GREETING PAGE BUTTON
    ===================================== */
