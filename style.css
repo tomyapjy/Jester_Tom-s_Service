@@ -112,9 +112,9 @@ button:hover {
 .wheel-window {
   position: absolute;
   left: 37%;
-  top: 23%;
+  top: 24%;
   width: 26%;
-  height: 46%;
+  height: 43%;
   overflow: hidden;
   z-index: 3;
   border-radius: 22px;
@@ -189,10 +189,10 @@ button:hover {
 /* Down arrow */
 
 .wheel-click.down {
-  left: 47.6%;
-  top: 67%;
-  width: 5.2%;
-  height: 7%;
+  left: 47.7%;
+  top: 66.5%;
+  width: 5%;
+  height: 6.5%;
   border-radius: 50%;
 }
 
