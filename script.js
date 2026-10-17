@@ -930,3 +930,62 @@ appointmentsMonthButton.addEventListener("click", () => {
   appointmentsDetails.textContent =
     "Select a date to view your appointments.";
 });
+
+/* =====================================
+   WISHLIST NAVIGATION
+   ===================================== */
+
+const wishlistLink = document.getElementById("wishlist-link");
+const wishlistBack = document.getElementById("wishlist-back");
+
+const WISHLIST_IMAGE = "wishlist page.png";
+
+let previousWishlistPage = null;
+
+function updateWishlistLink() {
+  const current = image.src.toLowerCase();
+
+  const isGreeting = current.includes("greeting");
+  const isWheel = current.includes("wheels");
+
+  wishlistLink.hidden = !(isGreeting || isWheel);
+
+  wishlistLink.classList.toggle("wishlist-greeting", isGreeting);
+  wishlistLink.classList.toggle("wishlist-wheel", isWheel);
+}
+
+function showWishlist() {
+  previousWishlistPage = image.src;
+
+  bookingForm.hidden = true;
+  wheelControls.hidden = true;
+  getStartedButton.hidden = true;
+  pageBack.hidden = true;
+
+  hideConfirmation();
+
+  document.getElementById("appointments-link").hidden = true;
+
+  wrapper.classList.remove("booking-page", "appointments-page");
+  wrapper.classList.add("wishlist-page");
+
+  image.src = WISHLIST_IMAGE;
+  image.alt = "Wishlist";
+
+  wishlistLink.hidden = true;
+  wishlistBack.hidden = false;
+}
+
+function backFromWishlist() {
+  wishlistBack.hidden = true;
+  wrapper.classList.remove("wishlist-page");
+
+  if (previousWishlistPage?.includes("wheels")) {
+    showWheel();
+  } else {
+    showGreeting();
+  }
+}
+
+image.addEventListener("load", updateWishlistLink);
+updateWishlistLink();

@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jester Tom's Service</title>
-  <link rel="stylesheet" href="style.css?v=28">
+  <link rel="stylesheet" href="style.css?v=29">
 </head>
 
 <body>
@@ -18,7 +18,23 @@
         src="assets/morning/Morning greetings page.png"
         alt="Jester Tom's Service"
       >
+        <!-- Wishlist navigation hotspot -->
+<button
+  id="wishlist-link"
+  type="button"
+  onclick="showWishlist()"
+  aria-label="Open Wishlist"
+  hidden
+></button>
 
+<!-- Wishlist page Back button -->
+<button
+  id="wishlist-back"
+  type="button"
+  onclick="backFromWishlist()"
+  aria-label="Back to previous page"
+  hidden
+></button>
       <!-- Appointments navigation hotspot -->
         <button
          id="appointments-link"
@@ -211,6 +227,6 @@
     </div>
   </main>
 
-  <script src="script.js?v=5"></script>
+  <script src="script.js?v=6"></script>
 </body>
 </html>

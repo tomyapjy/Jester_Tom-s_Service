@@ -772,6 +772,7 @@ button:hover {
   border: none !important;
   cursor: pointer !important;
 }
+
 /* =====================================
    APPOINTMENTS NAVIGATION HOTSPOTS
    ===================================== */
@@ -1004,4 +1005,62 @@ button:hover {
 /* Keep Back clickable */
 .image-wrapper.appointments-page #appointments-back:not([hidden]) {
   z-index: 9999;
+}
+
+/* =====================================
+   WISHLIST NAVIGATION
+   ===================================== */
+
+#wishlist-link,
+#wishlist-back {
+  position: absolute;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  z-index: 500;
+}
+
+#wishlist-link[hidden],
+#wishlist-back[hidden] {
+  display: none !important;
+}
+
+/* Greeting page Wishlist button */
+#wishlist-link.wishlist-greeting {
+  left: 42%;
+  top: 73%;
+  width: 15%;
+  height: 7%;
+}
+
+/* Wheel page Wishlist button */
+#wishlist-link.wishlist-wheel {
+  left: 90%;
+  top: 22%;
+  width: 8%;
+  height: 14%;
+}
+
+/* Wishlist page sizing */
+.image-wrapper.wishlist-page {
+  position: relative;
+  width: 98vw;
+  max-width: 98vw;
+  height: auto;
+}
+
+.image-wrapper.wishlist-page img.page-background {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Wishlist Back button — initial position */
+.image-wrapper.wishlist-page #wishlist-back {
+  left: 4%;
+  top: 18%;
+  width: 13%;
+  height: 9%;
 }
