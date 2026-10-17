@@ -880,3 +880,121 @@ button:hover {
   border: none !important;
   cursor: pointer !important;
 }
+
+/* =====================================
+   APPOINTMENTS INTERACTIVE OVERLAY
+   ===================================== */
+
+#appointments-ui[hidden] {
+  display: none !important;
+}
+
+.image-wrapper.appointments-page #appointments-ui {
+  position: absolute;
+  inset: 0;
+  z-index: 250;
+  pointer-events: none;
+}
+
+/* Month navigation */
+#appointments-prev-month,
+#appointments-next-month,
+#appointments-month-select {
+  position: absolute;
+  background: #fff4f1;
+  color: #a52c57;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  pointer-events: auto;
+  font-weight: bold;
+  z-index: 2;
+}
+
+#appointments-prev-month {
+  left: 23%;
+  top: 39%;
+  width: 3%;
+  height: 6%;
+}
+
+#appointments-next-month {
+  left: 48%;
+  top: 39%;
+  width: 3%;
+  height: 6%;
+}
+
+#appointments-month-select {
+  left: 30%;
+  top: 39%;
+  width: 15%;
+  height: 6%;
+}
+
+/* Calendar dates */
+#appointments-calendar {
+  position: absolute;
+  left: 23%;
+  top: 47%;
+  width: 28%;
+  height: 30%;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  gap: 2px;
+  background: #fff0e9;
+  border-radius: 8px;
+  pointer-events: auto;
+}
+
+#appointments-calendar button {
+  border: none;
+  background: transparent;
+  color: #813447;
+  cursor: pointer;
+  font-size: clamp(9px, 1vw, 15px);
+  border-radius: 50%;
+}
+
+#appointments-calendar button:hover {
+  background: #ffd2dd;
+}
+
+#appointments-calendar button.selected {
+  background: #ff4e88;
+  color: white;
+}
+
+.appointment-weekday {
+  text-align: center;
+  font-size: clamp(8px, 0.9vw, 13px);
+  font-weight: bold;
+  color: #a52c57;
+}
+
+/* Plans panel */
+#appointments-details {
+  position: absolute;
+  left: 59%;
+  top: 43%;
+  width: 25%;
+  height: 32%;
+  padding: 12px;
+  background: #fff2ed;
+  border-radius: 12px;
+  color: #a52c57;
+  text-align: center;
+  overflow-y: auto;
+  pointer-events: auto;
+  font-size: clamp(10px, 1vw, 16px);
+}
+
+#appointments-details h3 {
+  margin: 0 0 12px;
+}
+
+/* Keep Back clickable */
+.image-wrapper.appointments-page #appointments-back:not([hidden]) {
+  z-index: 9999;
+}

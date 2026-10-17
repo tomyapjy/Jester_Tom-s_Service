@@ -710,10 +710,20 @@ function showAppointments() {
 
   wrapper.classList.remove("booking-page");
   wrapper.classList.add("appointments-page");
+  selectedAppointmentDate = null;
+  appointmentsMonth = new Date().getMonth();
+  appointmentsYear = new Date().getFullYear();
+
+  appointmentsUI.hidden = false;
+  renderAppointmentsCalendar();
+
+  appointmentsDetails.textContent =
+  "Select a date to view your appointments.";
 }
 
 // Return to the previous page
 function backFromAppointments() {
+  appointmentsUI.hidden = true;
   appointmentsBack.hidden = true;
 
   wrapper.classList.remove("appointments-page");
@@ -759,3 +769,164 @@ function updateAppointmentsLink() {
 
 image.addEventListener("load", updateAppointmentsLink);
 updateAppointmentsLink();
+
+/* =====================================
+   INTERACTIVE APPOINTMENTS CALENDAR
+   ===================================== */
+
+const appointmentsUI =
+  document.getElementById("appointments-ui");
+
+const appointmentsCalendar =
+  document.getElementById("appointments-calendar");
+
+const appointmentsDetails =
+  document.getElementById("appointments-details");
+
+const appointmentsMonthButton =
+  document.getElementById("appointments-month-select");
+
+let appointmentsMonth = new Date().getMonth();
+let appointmentsYear = new Date().getFullYear();
+let selectedAppointmentDate = null;
+
+function updateAppointmentsBackground() {
+  const isNight = image.src.includes("assets/night/");
+  const folder = isNight ? "night" : "morning";
+  const prefix = isNight ? "night" : "morning";
+  const suffix = selectedAppointmentDate ? "W" : "WO";
+
+  image.src = `assets/${folder}/${prefix} apt ${suffix}.png`;
+}
+
+function renderAppointmentsCalendar() {
+  appointmentsCalendar.innerHTML = "";
+
+  appointmentsMonthButton.textContent =
+    `${bookingMonths[appointmentsMonth]} ${appointmentsYear} ▾`;
+
+  const firstDay = new Date(
+    appointmentsYear, appointmentsMonth, 1
+  ).getDay();
+
+  const daysInMonth = new Date(
+    appointmentsYear, appointmentsMonth + 1, 0
+  ).getDate();
+
+  const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  weekdays.forEach(day => {
+    const label = document.createElement("span");
+    label.className = "appointment-weekday";
+    label.textContent = day;
+    appointmentsCalendar.appendChild(label);
+  });
+
+  for (let i = 0; i < firstDay; i++) {
+    appointmentsCalendar.appendChild(
+      document.createElement("span")
+    );
+  }
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = day;
+
+    const date =
+      `${appointmentsYear}-` +
+      `${String(appointmentsMonth + 1).padStart(2, "0")}-` +
+      `${String(day).padStart(2, "0")}`;
+
+    if (date === selectedAppointmentDate) {
+      button.classList.add("selected");
+    }
+
+    button.addEventListener("click", () => {
+      selectedAppointmentDate = date;
+      updateAppointmentsBackground();
+      renderAppointmentsCalendar();
+      showAppointmentPlans(date);
+    });
+
+    appointmentsCalendar.appendChild(button);
+  }
+}
+
+function changeAppointmentsMonth(direction) {
+  const next = new Date(
+    appointmentsYear,
+    appointmentsMonth + direction,
+    1
+  );
+
+  if (next.getFullYear() < 2026 || next.getFullYear() > 2040) {
+    return;
+  }
+
+  appointmentsMonth = next.getMonth();
+  appointmentsYear = next.getFullYear();
+  selectedAppointmentDate = null;
+
+  updateAppointmentsBackground();
+  renderAppointmentsCalendar();
+
+  appointmentsDetails.textContent =
+    "Select a date to view your appointments.";
+}
+
+function showAppointmentPlans(date) {
+  const heading = document.createElement("h3");
+  heading.textContent = new Date(
+    `${date}T12:00:00`
+  ).toLocaleDateString("en-SG", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+
+  const message = document.createElement("p");
+  message.textContent =
+    "Appointment details will appear here once connected to your saved bookings.";
+
+  appointmentsDetails.replaceChildren(heading, message);
+}
+
+document.getElementById("appointments-prev-month")
+  .addEventListener("click", () => changeAppointmentsMonth(-1));
+
+document.getElementById("appointments-next-month")
+  .addEventListener("click", () => changeAppointmentsMonth(1));
+
+appointmentsMonthButton.addEventListener("click", () => {
+  const answer = prompt(
+    "Enter month and year (MM/YYYY):",
+    `${String(appointmentsMonth + 1).padStart(2, "0")}/${appointmentsYear}`
+  );
+
+  if (!answer) return;
+
+  const match = answer.match(/^(0?[1-9]|1[0-2])\/(20\d{2})$/);
+
+  if (!match) {
+    alert("Please use MM/YYYY, for example 10/2026.");
+    return;
+  }
+
+  const year = Number(match[2]);
+
+  if (year < 2026 || year > 2040) {
+    alert("Please choose a year between 2026 and 2040.");
+    return;
+  }
+
+  appointmentsMonth = Number(match[1]) - 1;
+  appointmentsYear = year;
+  selectedAppointmentDate = null;
+
+  updateAppointmentsBackground();
+  renderAppointmentsCalendar();
+
+  appointmentsDetails.textContent =
+    "Select a date to view your appointments.";
+});
