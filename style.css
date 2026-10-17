@@ -496,3 +496,55 @@ button:hover {
     overflow-wrap: anywhere;
   }
 }
+/* FIX: Keep Back button clickable above booking form */
+
+#page-back:not([hidden]) {
+  z-index: 150;
+  pointer-events: auto;
+}
+
+/* =====================================
+   ENLARGE BOOKING TABLE - DESKTOP
+   ===================================== */
+
+@media (min-width: 769px) {
+
+  #booking-form {
+    padding: 4% 12%;
+  }
+
+  .booking-card {
+    width: min(100%, 850px);
+    max-height: 95%;
+    padding: 24px;
+  }
+
+  .booking-card h2 {
+    font-size: 26px;
+    margin-bottom: 18px;
+  }
+
+  .booking-calendar {
+    gap: 7px;
+    margin-bottom: 18px;
+  }
+
+  .booking-calendar button {
+    padding: 12px 0;
+    font-size: 16px;
+  }
+
+  .booking-calendar .weekday {
+    font-size: 15px;
+  }
+
+  #booking-comments {
+    min-height: 90px;
+  }
+
+  #booking-confirm {
+    min-height: 50px;
+    font-size: 17px;
+  }
+
+}
