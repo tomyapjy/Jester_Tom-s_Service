@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,107 +19,153 @@
         alt="Jester Tom's Service"
       >
 
+      <!-- Greeting page -->
       <button
         id="get-started"
         class="image-hotspot"
+        type="button"
         onclick="showWheel()"
         aria-label="Get Started"
       ></button>
 
+      <!-- Back button on booking pages -->
       <button
-  id="page-back"
-  class="wheel-click back"
-  onclick="backToWheel()"
-  aria-label="Back to selection wheel"
-  hidden
-></button>
-<div id="booking-form" hidden>
-  <div class="booking-card">
-    <h2 id="booking-title">Choose a date</h2>
+        id="page-back"
+        class="wheel-click back"
+        type="button"
+        onclick="backToWheel()"
+        aria-label="Back to selection wheel"
+        hidden
+      ></button>
 
-    <div class="booking-navigation">
-      <button type="button" onclick="changeBookingMonth(-1)">‹</button>
+      <!-- Interactive booking form -->
+      <div id="booking-form" hidden>
+        <div class="booking-card">
 
-      <select id="booking-month" aria-label="Month"></select>
-      <select id="booking-year" aria-label="Year"></select>
+          <h2 id="booking-title">Choose a date</h2>
 
-      <button type="button" onclick="changeBookingMonth(1)">›</button>
-    </div>
+          <div class="booking-navigation">
+            <button
+              type="button"
+              onclick="changeBookingMonth(-1)"
+              aria-label="Previous month"
+            >‹</button>
 
-    <div id="booking-calendar" class="booking-calendar"></div>
+            <select
+              id="booking-month"
+              aria-label="Month"
+            ></select>
 
-    <label for="booking-comments">Any suggestions?</label>
-    <textarea
-      id="booking-comments"
-      maxlength="200"
-      rows="3"
-      placeholder="Anywhere you've wanted to go?"
-    ></textarea>
+            <select
+              id="booking-year"
+              aria-label="Year"
+            ></select>
 
-    <div id="booking-count">0/200</div>
+            <button
+              type="button"
+              onclick="changeBookingMonth(1)"
+              aria-label="Next month"
+            >›</button>
+          </div>
 
-    <button
-      id="booking-confirm"
-      type="button"
-      onclick="submitBooking()"
-      disabled
-    >
-      Confirm →
-    </button>
-  </div>
-</div>
+          <div
+            id="booking-calendar"
+            class="booking-calendar"
+          ></div>
 
-<!-- Booking confirmation details -->
-<div id="confirmation-details" hidden>
-  <div class="confirmation-info">
-    <div>
-      <strong>📅 Date:</strong>
-      <span id="confirmed-date"></span>
-    </div>
+          <label for="booking-comments">
+            Any suggestions?
+          </label>
 
-    <div>
-      <strong>🌸 Category:</strong>
-      <span id="confirmed-category"></span>
-    </div>
-  </div>
-</div>
+          <textarea
+            id="booking-comments"
+            maxlength="200"
+            rows="3"
+            placeholder="Anywhere you've wanted to go?"
+          ></textarea>
 
-<!-- Back to Home button -->
-<button
-  id="confirmation-home"
-  type="button"
-  onclick="confirmationHome()"
-  aria-label="Back to Home"
-  hidden
-></button>
+          <div id="booking-count">0/200</div>
 
-<div id="wheel-controls" hidden>
+          <button
+            id="booking-confirm"
+            type="button"
+            onclick="submitBooking()"
+            disabled
+          >
+            Confirm →
+          </button>
+
+        </div>
+      </div>
+
+      <!-- Dynamic confirmation details -->
+      <div id="confirmation-details" hidden>
+        <div class="confirmation-info">
+          <div>
+            <strong>📅 Date:</strong>
+            <span id="confirmed-date"></span>
+          </div>
+
+          <div>
+            <strong>🌸 Category:</strong>
+            <span id="confirmed-category"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Confirmation Back to Home -->
+      <button
+        id="confirmation-home"
+        type="button"
+        onclick="confirmationHome()"
+        aria-label="Back to Home"
+        hidden
+      ></button>
+
+      <!-- Selection wheel -->
+      <div id="wheel-controls" hidden>
 
         <div class="wheel-window">
           <div id="wheel-track"></div>
         </div>
 
-        <button class="wheel-click up"
-                onclick="moveWheel(-1)"
-                aria-label="Scroll up"></button>
+        <button
+          class="wheel-click up"
+          type="button"
+          onclick="moveWheel(-1)"
+          aria-label="Scroll up"
+        ></button>
 
-        <button class="wheel-click down"
-                onclick="moveWheel(1)"
-                aria-label="Scroll down"></button>
+        <button
+          class="wheel-click down"
+          type="button"
+          onclick="moveWheel(1)"
+          aria-label="Scroll down"
+        ></button>
 
-        <button class="wheel-click surprise"
-                onclick="surpriseMe()"
-                aria-label="Surprise me"></button>
+        <button
+          class="wheel-click surprise"
+          type="button"
+          onclick="surpriseMe()"
+          aria-label="Surprise me"
+        ></button>
 
-        <button class="wheel-click confirm"
-                onclick="confirmSelection()"
-                aria-label="Confirm"></button>
+        <button
+          class="wheel-click confirm"
+          type="button"
+          onclick="confirmSelection()"
+          aria-label="Confirm"
+        ></button>
 
-        <button class="wheel-click back"
-                onclick="goBack()"
-                aria-label="Back"></button>
+        <button
+          class="wheel-click back"
+          type="button"
+          onclick="goBack()"
+          aria-label="Back to Home"
+        ></button>
 
       </div>
+
     </div>
   </main>
 

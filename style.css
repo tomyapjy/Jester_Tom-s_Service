@@ -1,7 +1,7 @@
 
 /* =====================================
    JESTER TOM'S SERVICE
-   CLEAN STYLESHEET
+   COMPLETE STYLESHEET
    ===================================== */
 
 * {
@@ -22,10 +22,6 @@ body {
   text-align: center;
 }
 
-h1 {
-  color: #e75480;
-}
-
 button {
   background-color: #ffb6c1;
   border: none;
@@ -39,7 +35,7 @@ button:hover {
 }
 
 /* =====================================
-   PAGE FITTING
+   PAGE AND BACKGROUND
    ===================================== */
 
 .page-container {
@@ -51,8 +47,6 @@ button:hover {
   align-items: center;
   overflow: hidden;
 }
-
-/* Wrapper and image must scale together */
 
 .image-wrapper {
   position: relative;
@@ -72,8 +66,6 @@ button:hover {
   object-fit: contain;
 }
 
-/* Make booking pages fill the available screen */
-
 .image-wrapper.booking-page {
   display: block;
   flex: none;
@@ -92,7 +84,7 @@ button:hover {
 }
 
 /* =====================================
-   GREETING PAGE BUTTON
+   GREETING PAGE
    ===================================== */
 
 .image-hotspot {
@@ -108,7 +100,8 @@ button:hover {
   border: none;
   border-radius: 30px;
   cursor: pointer;
-  z-index: 2;
+  z-index: 20;
+  touch-action: manipulation;
 }
 
 .image-hotspot:hover {
@@ -120,12 +113,16 @@ button:hover {
   outline-offset: 2px;
 }
 
+#get-started[hidden] {
+  display: none !important;
+}
+
 /* =====================================
-   ANIMATED SELECTION WHEEL
+   SELECTION WHEEL
    ===================================== */
 
 #wheel-controls[hidden] {
-  display: none;
+  display: none !important;
 }
 
 .wheel-window {
@@ -138,9 +135,9 @@ button:hover {
   z-index: 3;
   border-radius: 22px;
   background: #ffe9dc;
-  --row-height: 25%;
   user-select: none;
   -webkit-user-select: none;
+  touch-action: none;
 }
 
 #wheel-track {
@@ -165,8 +162,10 @@ button:hover {
   color: #3c2220;
   background: #fff0e5;
   border-radius: 22px;
+  cursor: pointer;
   user-select: none;
   -webkit-user-select: none;
+  touch-action: none;
 }
 
 .wheel-option.selected {
@@ -179,7 +178,7 @@ button:hover {
 }
 
 /* =====================================
-   WHEEL CLICKABLE BUTTONS
+   WHEEL BUTTON HOTSPOTS
    ===================================== */
 
 .wheel-click {
@@ -189,13 +188,12 @@ button:hover {
   border: none;
   cursor: pointer;
   z-index: 15;
+  touch-action: manipulation;
 }
 
 .wheel-click:hover {
   background: transparent;
 }
-
-/* Up arrow */
 
 .wheel-click.up {
   left: 47.6%;
@@ -205,8 +203,6 @@ button:hover {
   border-radius: 50%;
 }
 
-/* Down arrow */
-
 .wheel-click.down {
   left: 47.7%;
   top: 66.5%;
@@ -214,8 +210,6 @@ button:hover {
   height: 6.5%;
   border-radius: 50%;
 }
-
-/* Surprise Me */
 
 .wheel-click.surprise {
   left: 38.5%;
@@ -225,8 +219,6 @@ button:hover {
   border-radius: 40px;
 }
 
-/* Confirm */
-
 .wheel-click.confirm {
   left: 38.5%;
   top: 85%;
@@ -234,8 +226,6 @@ button:hover {
   height: 8%;
   border-radius: 40px;
 }
-
-/* Back */
 
 .wheel-click.back {
   left: 2%;
@@ -245,42 +235,22 @@ button:hover {
   border-radius: 30px;
 }
 
+#page-back[hidden] {
+  display: none !important;
+}
+
 /* =====================================
-   TEMPORARY ALIGNMENT DEBUGGING
+   INTERACTIVE BOOKING FORM
    ===================================== */
 
-#wheel-controls .wheel-click {
-  background: rgba(255, 0, 0, 0.12) !important;
-  border: 2px solid red !important;
-  box-shadow: none !important;
-}
-
-#wheel-controls .wheel-click:hover {
-  background: rgba(255, 0, 0, 0.18) !important;
-}
-/* Improve wheel tapping experience */
-
-.wheel-option {
-  cursor: pointer;
-  touch-action: none;
-}
-
-.wheel-option:active {
-  filter: brightness(0.97);
-}
-#page-back[hidden] {
-  display: none;
-}
-/* WORKING BOOKING FORM */
-
 #booking-form[hidden] {
-  display: none;
+  display: none !important;
 }
 
 #booking-form {
   position: absolute;
   inset: 0;
-  z-index: 10;
+  z-index: 30;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -387,14 +357,16 @@ button:hover {
   background: #aaa;
   cursor: not-allowed;
 }
-/* BOOKING CONFIRMED PAGE */
+
+/* =====================================
+   BOOKING CONFIRMATION
+   ===================================== */
 
 #confirmation-details[hidden],
 #confirmation-home[hidden] {
-  display: none;
+  display: none !important;
 }
 
-/* Covers the old Date / Time / Category table */
 #confirmation-details {
   position: absolute;
   left: 40%;
@@ -402,10 +374,8 @@ button:hover {
   width: 20%;
   height: 21%;
   z-index: 20;
-
   background: #ffe4df;
   border-radius: 15px;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -431,7 +401,6 @@ button:hover {
   text-align: right;
 }
 
-/* Clickable area over the existing Back to Home button */
 #confirmation-home {
   position: absolute;
   left: 40%;
@@ -439,7 +408,7 @@ button:hover {
   width: 20%;
   height: 8%;
   z-index: 25;
-
+  padding: 0;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -448,7 +417,10 @@ button:hover {
 #confirmation-home:hover {
   background: transparent;
 }
-/* MOBILE GET STARTED BUTTON FIX */
+
+/* =====================================
+   MOBILE ADJUSTMENTS
+   ===================================== */
 
 @media (max-width: 768px) {
 
@@ -462,13 +434,8 @@ button:hover {
     touch-action: manipulation;
   }
 
-}
-/* =====================================
-   MOBILE BOOKING CALENDAR FIX
-   Desktop layout remains unchanged
-   ===================================== */
-
-@media (max-width: 768px) {
+  /* Show the calendar at readable size
+     instead of shrinking it with the image */
 
   #booking-form:not([hidden]) {
     position: fixed;
@@ -511,5 +478,21 @@ button:hover {
 
   #booking-confirm {
     min-height: 44px;
+  }
+
+  .confirmation-info {
+    padding: 3px;
+    font-size: clamp(7px, 2vw, 11px);
+  }
+
+  .confirmation-info div {
+    display: block;
+    margin: 4px 0;
+  }
+
+  .confirmation-info span {
+    display: block;
+    text-align: center;
+    overflow-wrap: anywhere;
   }
 }
