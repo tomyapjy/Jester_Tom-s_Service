@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jester Tom's Service</title>
-  <link rel="stylesheet" href="style.css?v=20">
+  <link rel="stylesheet" href="style.css?v=21">
 </head>
 
 <body>
@@ -27,6 +27,31 @@
           aria-label="View Appointments"
           hidden
           ></button>
+
+<!-- Shared Appointments calendar interaction -->
+<div id="appointments-ui" hidden>
+  <button
+    id="appointments-prev-month"
+    type="button"
+    aria-label="Previous month"
+  ></button>
+
+  <button
+    id="appointments-next-month"
+    type="button"
+    aria-label="Next month"
+  ></button>
+
+  <button
+    id="appointments-month-select"
+    type="button"
+    aria-label="Choose month"
+  ></button>
+
+  <div id="appointments-calendar"></div>
+
+  <div id="appointments-details" aria-live="polite"></div>
+</div>
 
 <!-- Appointments page Back button -->
 <button
