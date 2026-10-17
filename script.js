@@ -106,7 +106,16 @@ wheelWindow.addEventListener("pointerdown", event => {
   dragDistance = 0;
   dragSteps = 0;
 
-  tappedRow = event.target.closest(".wheel-option");
+  const rect = wheelWindow.getBoundingClientRect();
+const tapY = event.clientY - rect.top;
+
+const visibleRow = Math.max(
+  0,
+  Math.min(3, Math.floor(tapY / rowHeight()))
+);
+
+// Map the tapped area to its corresponding wheel option.
+tappedRow = wheelTrack.children[visibleRow + 2] || null;
 
   wheelWindow.setPointerCapture(event.pointerId);
   wheelWindow.style.cursor = "grabbing";
@@ -117,9 +126,9 @@ wheelWindow.addEventListener("pointermove", event => {
 
   dragDistance = event.clientY - dragStartY;
 
-  if (Math.abs(dragDistance) > 8) {
-    pointerMoved = true;
-  }
+  if (Math.abs(dragDistance) > 12) {
+  pointerMoved = true;
+}
 
   if (!pointerMoved) return;
 
