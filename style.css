@@ -381,9 +381,9 @@ button:hover {
   align-items: flex-start;
 }
 
-/* Move Date and Category upward */
 #confirmation-details .confirmation-info {
-  padding-top: 15px;
+  padding-top: 0;
+  transform: translateY(-18px);
 }
 
 .confirmation-info {
@@ -810,12 +810,14 @@ button:hover {
   height: 15%;
 }
 
-/* Booking Confirmed: View My Appointments button */
+/* Booking Confirmed — View My Appointments */
 #appointments-link.appointments-confirmation {
   left: 40%;
   top: 77%;
   width: 20%;
-  height: 9%;
+  height: 7%;
+  z-index: 300;
+  pointer-events: auto;
 }
 
 /* Appointments page: Back button */
