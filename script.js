@@ -1,4 +1,5 @@
-/* Jester Tom's Service - Animated Wheel */
+
+/* Jester Tom's Service - Animated Slot Machine Wheel */
 
 const categories = [
   { name: "Massage appointment", icon: "🌸" },
@@ -9,112 +10,133 @@ const categories = [
 
 let selectedIndex = 1;
 let spinning = false;
-let wheelPosition = 4;
-let touchStartY = 0;
+let touchStartY = null;
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = ms =>
+  new Promise(resolve => setTimeout(resolve, ms));
+
+const image = document.getElementById("page-image");
+const getStartedButton = document.getElementById("get-started");
+const wheelControls = document.getElementById("wheel-controls");
+const wheelTrack = document.getElementById("wheel-track");
+const wheelWindow = document.querySelector(".wheel-window");
 
 function showWheel() {
-  document.getElementById("page-image").src =
-    "assets/morning/morning wheels page.png";
+  image.src = "assets/morning/morning wheels page.png";
+  image.alt = "Jester Tom's Service Selection Wheel";
 
-  document.getElementById("get-started").hidden = true;
-  document.getElementById("get-started").style.display = "none";
+  getStartedButton.hidden = true;
+  getStartedButton.style.display = "none";
 
-  document.getElementById("wheel-controls").hidden = false;
+  wheelControls.hidden = false;
 
   selectedIndex = 1;
   spinning = false;
+
   buildWheel();
 }
 
 function buildWheel() {
-  const track = document.getElementById("wheel-track");
-  track.innerHTML = "";
+  wheelTrack.innerHTML = "";
 
-  // Repeated entries allow the wheel to loop continuously.
-  for (let i = -8; i <= 8; i++) {
-    const categoryIndex =
-      ((selectedIndex + i + 1) % 4 + 4) % 4;
+  // Five rows: two above, selected row, two below.
+  for (let offset = -2; offset <= 2; offset++) {
+    const index =
+      (selectedIndex + offset + categories.length) %
+      categories.length;
 
-    const category = categories[categoryIndex];
+    const category = categories[index];
     const row = document.createElement("div");
 
     row.className = "wheel-option";
-    if (i === 0) row.classList.add("selected");
 
-    row.innerHTML = `
-      <span class="option-icon">${category.icon}</span>
-      <span>${category.name}</span>
-    `;
+    if (offset === 0) {
+      row.classList.add("selected");
+    }
 
-    track.appendChild(row);
+    const icon = document.createElement("span");
+    icon.className = "option-icon";
+    icon.textContent = category.icon;
+
+    const label = document.createElement("span");
+    label.textContent = category.name;
+
+    row.append(icon, label);
+    wheelTrack.appendChild(row);
   }
 
-  track.style.transition = "none";
-  track.style.transform = "translateY(-200%)";
+  // Each row occupies 25% of the wheel window.
+  // Position the selected row in the second visible slot.
+  wheelTrack.style.transition = "none";
+  wheelTrack.style.transform = "translateY(-25%)";
 }
 
-async function moveWheel(direction) {
-  if (spinning) return;
+async function animateStep(direction, duration = 350) {
+  const startPosition = -25;
+  const endPosition = direction > 0 ? -50 : 0;
 
-  spinning = true;
+  wheelTrack.style.transition = "none";
+  wheelTrack.style.transform =
+    `translateY(${startPosition}%)`;
 
-  const track = document.getElementById("wheel-track");
+  // Force the browser to apply the starting position.
+  void wheelTrack.offsetHeight;
 
-  track.style.transition = "transform 350ms ease-in-out";
+  wheelTrack.style.transition =
+    `transform ${duration}ms ease-in-out`;
 
-  const destination = direction > 0 ? -225 : -175;
-  track.style.transform = `translateY(${destination}%)`;
+  wheelTrack.style.transform =
+    `translateY(${endPosition}%)`;
 
-  await sleep(370);
+  await sleep(duration + 30);
 
   selectedIndex =
     (selectedIndex + direction + categories.length) %
     categories.length;
 
   buildWheel();
+}
+
+async function moveWheel(direction) {
+  if (spinning || wheelControls.hidden) return;
+
+  spinning = true;
+
+  await animateStep(direction);
+
   spinning = false;
 }
 
 async function surpriseMe() {
-  if (spinning) return;
+  if (spinning || wheelControls.hidden) return;
 
   spinning = true;
 
-  // Surprise Me excludes Massage Appointment.
+  // Surprise Me chooses only Outing, Indoor or Food.
   const destination = Math.floor(Math.random() * 3) + 1;
 
-  const track = document.getElementById("wheel-track");
+  // Complete multiple rotations before stopping.
+  const distance =
+    (destination - selectedIndex + categories.length) %
+    categories.length;
 
-  // Fast spinning, followed by gradual deceleration.
-  const delays = [
-    80, 70, 65, 65, 70, 80,
-    100, 130, 170, 220, 300, 400
-  ];
+  const totalSteps = 12 + distance;
 
-  for (const delay of delays) {
-    track.style.transition = `transform ${delay}ms linear`;
-    track.style.transform = "translateY(-225%)";
+  for (let step = 0; step < totalSteps; step++) {
+    const progress = step / totalSteps;
 
-    await sleep(delay + 15);
+    // Fast at first, then gradually slow down.
+    const duration =
+      Math.round(85 + 380 * progress * progress);
 
-    selectedIndex = (selectedIndex + 1) % categories.length;
-    buildWheel();
-
-    // Allow the browser to register the reset.
-    await sleep(20);
+    await animateStep(1, duration);
   }
-
-  // Finish on the randomly selected date category.
-  selectedIndex = destination;
-  buildWheel();
 
   spinning = false;
 }
 
 function confirmSelection() {
-  if (spinning) return;
+  if (spinning || wheelControls.hidden) return;
 
   const pages = [
     "assets/morning/morning massage page.png",
@@ -123,49 +145,59 @@ function confirmSelection() {
     "assets/morning/morning food page.png"
   ];
 
-  document.getElementById("page-image").src =
-    pages[selectedIndex];
+  image.src = pages[selectedIndex];
+  image.alt = categories[selectedIndex].name;
 
-  document.getElementById("wheel-controls").hidden = true;
+  wheelControls.hidden = true;
 }
 
 function goBack() {
   if (spinning) return;
 
-  document.getElementById("page-image").src =
-    "assets/morning/Morning greetings page.png";
+  image.src = "assets/morning/Morning greetings page.png";
+  image.alt = "Jester Tom's Service Greeting Page";
 
-  document.getElementById("wheel-controls").hidden = true;
+  wheelControls.hidden = true;
 
-  const button = document.getElementById("get-started");
-  button.hidden = false;
-  button.style.display = "block";
+  getStartedButton.hidden = false;
+  getStartedButton.style.display = "block";
 }
 
-// Mouse wheel support
-document.addEventListener("wheel", event => {
-  if (document.getElementById("wheel-controls").hidden) return;
-
-  if (event.target.closest(".wheel-window")) {
+// Mouse scroll support
+wheelWindow.addEventListener(
+  "wheel",
+  event => {
     event.preventDefault();
+
+    if (spinning || wheelControls.hidden) return;
+
     moveWheel(event.deltaY > 0 ? 1 : -1);
-  }
-}, { passive: false });
+  },
+  { passive: false }
+);
 
 // Touch swipe support
-document.addEventListener("touchstart", event => {
-  if (event.target.closest(".wheel-window")) {
+wheelWindow.addEventListener(
+  "touchstart",
+  event => {
     touchStartY = event.touches[0].clientY;
-  }
-}, { passive: true });
+  },
+  { passive: true }
+);
 
-document.addEventListener("touchend", event => {
-  if (!event.target.closest(".wheel-window")) return;
+wheelWindow.addEventListener(
+  "touchend",
+  event => {
+    if (touchStartY === null) return;
 
-  const difference =
-    touchStartY - event.changedTouches[0].clientY;
+    const difference =
+      touchStartY - event.changedTouches[0].clientY;
 
-  if (Math.abs(difference) > 20) {
-    moveWheel(difference > 0 ? 1 : -1);
-  }
-});
+    touchStartY = null;
+
+    if (Math.abs(difference) > 20) {
+      moveWheel(difference > 0 ? 1 : -1);
+    }
+  },
+  { passive: true }
+);
