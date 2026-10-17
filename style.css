@@ -192,3 +192,70 @@ button:hover {
   width: 12%;
   height: 9%;
 }
+/* Wheel alignment adjustments */
+
+.wheel-window {
+  left: 37%;
+  top: 23%;
+  width: 26%;
+  height: 46%;
+  border-radius: 22px;
+  background: #ffe9dc;
+  z-index: 3;
+}
+
+/* Keep the category boxes inside the wheel frame */
+
+.wheel-option {
+  width: 100%;
+  border-radius: 22px;
+  font-size: clamp(10px, 1.15vw, 22px);
+  padding: 2% 5%;
+}
+
+/* Keep the wheel arrows above the animated categories */
+
+.wheel-click.up,
+.wheel-click.down {
+  z-index: 15;
+}
+
+.wheel-click.up {
+  left: 45%;
+  top: 10%;
+  width: 10%;
+  height: 10%;
+}
+
+.wheel-click.down {
+  left: 45%;
+  top: 65%;
+  width: 10%;
+  height: 9%;
+}
+
+/* Align Surprise Me with the artwork */
+
+.wheel-click.surprise {
+  left: 33%;
+  top: 73%;
+  width: 34%;
+  height: 9%;
+}
+
+/* Align Confirm with the artwork */
+
+.wheel-click.confirm {
+  left: 33%;
+  top: 83%;
+  width: 34%;
+  height: 10%;
+}
+
+/* Prevent accidental text selection while dragging */
+
+.wheel-window,
+.wheel-option {
+  user-select: none;
+  -webkit-user-select: none;
+}
