@@ -867,3 +867,17 @@ button:hover {
   padding: 0;
   cursor: pointer;
 }
+/* Fix Back button hotspot on Outing booking page only */
+
+.image-wrapper.booking-page.outing-page #page-back:not([hidden]) {
+  position: absolute !important;
+  left: 4.5% !important;
+  top: 16% !important;
+  width: 12% !important;
+  height: 10% !important;
+  transform: none !important;
+  z-index: 9999 !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+}
