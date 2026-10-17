@@ -692,3 +692,27 @@ button:hover {
     transform: none;
   }
 }
+
+/* OUTING PAGE — RESTORE DESKTOP SIZE */
+
+@media (min-width: 769px) {
+
+  .page-container .image-wrapper.booking-page.outing-page {
+    position: relative;
+    width: 100vw !important;
+    height: 100dvh !important;
+    max-width: 100vw !important;
+    max-height: 100dvh !important;
+    overflow: hidden;
+  }
+
+  .page-container .image-wrapper.booking-page.outing-page img.page-background {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    object-fit: fill !important;
+  }
+
+}

@@ -388,6 +388,7 @@ function confirmSelection() {
   wrapper.classList.add("booking-page");
   wrapper.classList.toggle("indoor-page", selectedIndex === 2);
   wrapper.classList.toggle("food-page", selectedIndex === 3);
+  wrapper.classList.toggle("outing-page", selectedIndex === 1);
 
   wheelControls.hidden = true;
   getStartedButton.hidden = true;
