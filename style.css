@@ -716,3 +716,49 @@ button:hover {
   }
 
 }
+/* OUTING PAGE ONLY — preserve image proportions */
+
+@media (min-width: 769px) {
+  .page-container .image-wrapper.booking-page.outing-page img.page-background {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+  }
+}
+/* OUTING PAGE ONLY — Back button hotspot */
+
+@media (min-width: 769px) {
+  .image-wrapper.booking-page.outing-page #page-back {
+    position: absolute !important;
+    top: 16% !important;
+    left: 4% !important;
+    width: 12% !important;
+    height: 9% !important;
+
+    z-index: 1000 !important;
+    cursor: pointer !important;
+
+    background: transparent !important;
+    border: none !important;
+    transform: none !important;
+    pointer-events: auto !important;
+  }
+}
+/* Fix Back button specifically for Outing page */
+
+.image-wrapper.booking-page.outing-page #page-back {
+  position: absolute !important;
+  top: 16% !important;
+  left: 4% !important;
+  width: 12% !important;
+  height: 9% !important;
+
+  z-index: 9999 !important;
+  transform: none !important;
+  pointer-events: auto !important;
+
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+}
