@@ -448,3 +448,18 @@ button:hover {
 #confirmation-home:hover {
   background: transparent;
 }
+/* MOBILE GET STARTED BUTTON FIX */
+
+@media (max-width: 768px) {
+
+  #get-started:not([hidden]) {
+    left: 50%;
+    top: 62%;
+    width: 35%;
+    height: 12%;
+    transform: translateX(-50%);
+    z-index: 50;
+    touch-action: manipulation;
+  }
+
+}
