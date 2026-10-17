@@ -238,3 +238,23 @@ wheelWindow.addEventListener("pointercancel", () => {
   dragStartY = null;
   wheelWindow.style.cursor = "grab";
 });
+/* Click directly on a wheel category to select it */
+
+wheelTrack.addEventListener("click", event => {
+  if (spinning || wheelControls.hidden) return;
+
+  const clickedRow = event.target.closest(".wheel-option");
+  if (!clickedRow) return;
+
+  const rows = Array.from(wheelTrack.children);
+  const clickedPosition = rows.indexOf(clickedRow);
+
+  // Our wheel contains five rows.
+  // The selected category is the middle row (index 2).
+  const difference = clickedPosition - 2;
+
+  if (difference === 0) return;
+
+  // Move toward the clicked category.
+  moveWheel(difference > 0 ? 1 : -1);
+});
