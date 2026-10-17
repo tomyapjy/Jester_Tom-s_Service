@@ -639,3 +639,18 @@ button:hover {
   }
 
 }
+
+/* Align Back button hotspot with the artwork */
+
+@media (min-width: 769px) {
+  #page-back:not([hidden]) {
+    left: 3.5%;
+    top: 9.5%;
+    width: 13%;
+    height: 6%;
+    transform: none;
+    z-index: 150;
+    background: transparent;
+    border: none;
+  }
+}
