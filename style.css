@@ -297,3 +297,7 @@ button:hover {
 .wheel-click:hover {
   background: rgba(255, 0, 0, 0.5) !important;
 }
+body {
+  outline: 10px solid red !important;
+  outline-offset: -10px;
+}
