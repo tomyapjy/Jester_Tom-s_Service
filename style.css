@@ -684,10 +684,11 @@ button:hover {
   }
 
 }
-/* Food Outing Back button adjustment ONLY */
+/* Food Outing Back button alignment ONLY */
 
 @media (min-width: 769px) {
   .image-wrapper.food-page #page-back:not([hidden]) {
-    top: 12%;
+    top: 15%;
+    transform: none;
   }
 }
