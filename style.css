@@ -94,4 +94,101 @@ button:hover {
   outline: 3px solid #e75480;
   outline-offset: 2px;
 }
+/* ANIMATED SELECTION WHEEL */
 
+#wheel-controls[hidden] {
+  display: none;
+}
+
+.wheel-window {
+  position: absolute;
+  left: 41.5%;
+  top: 25.5%;
+  width: 17%;
+  height: 45%;
+  overflow: hidden;
+  z-index: 3;
+  border-radius: 20px;
+  background: #ffe9dc;
+  --row-height: 25%;
+}
+
+#wheel-track {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+
+.wheel-option {
+  height: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7%;
+  padding: 2%;
+  font-size: clamp(8px, 1.15vw, 22px);
+  font-weight: bold;
+  color: #3c2220;
+  background: #fff0e5;
+  border-radius: 18px;
+}
+
+.wheel-option.selected {
+  background: linear-gradient(#ffb1b5, #ff8e9e);
+  color: white;
+}
+
+.wheel-option .option-icon {
+  font-size: 1.6em;
+}
+
+.wheel-click {
+  position: absolute;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  z-index: 5;
+  cursor: pointer;
+}
+
+.wheel-click:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+.wheel-click.up {
+  left: 47.5%;
+  top: 14%;
+  width: 6%;
+  height: 9%;
+}
+
+.wheel-click.down {
+  left: 47.5%;
+  top: 67%;
+  width: 6%;
+  height: 9%;
+}
+
+.wheel-click.surprise {
+  left: 38%;
+  top: 76%;
+  width: 24%;
+  height: 8%;
+}
+
+.wheel-click.confirm {
+  left: 38%;
+  top: 85%;
+  width: 24%;
+  height: 8%;
+}
+
+.wheel-click.back {
+  left: 2%;
+  top: 14%;
+  width: 12%;
+  height: 9%;
+}
