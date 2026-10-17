@@ -1,7 +1,22 @@
-/* Jester Tom's Service */
 
+/* =====================================
+   JESTER TOM'S SERVICE
+   CLEAN STYLESHEET
+   ===================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
 body {
   margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
   font-family: Arial, sans-serif;
   background-color: #fff0f5;
   text-align: center;
@@ -23,16 +38,9 @@ button:hover {
   background-color: #ff91a4;
 }
 
-/* Consistent image sizing for all pages */
-
-* {
-  box-sizing: border-box;
-}
-
-
-/* Responsive page sizing */
-
-/* Fit the entire website into the browser window */
+/* =====================================
+   PAGE FITTING
+   ===================================== */
 
 .page-container {
   width: 100%;
@@ -44,39 +52,29 @@ button:hover {
   overflow: hidden;
 }
 
+/* Wrapper and image must scale together */
+
 .image-wrapper {
   position: relative;
-  width: fit-content;
+  display: inline-block;
+  flex: 0 1 auto;
+  width: auto;
   max-width: 100%;
-  max-height: 100dvh;
-  aspect-ratio: 2170 / 725;
+  max-height: 100%;
 }
 
 .page-background {
   display: block;
-  width: 100%;
-  height: 100%;
+  width: auto;
+  height: auto;
+  max-width: 100vw;
+  max-height: 100dvh;
   object-fit: contain;
 }
 
-/* Mobile adjustments */
-@media (max-width: 768px) {
-  .page-container {
-    min-height: 100dvh;
-  }
-
-  .page-background {
-    width: 100%;
-    height: auto;
-  }
-}
-
-/* Clickable areas over the artwork */
-
-.image-wrapper {
-  position: relative;
-  width: 100%;
-}
+/* =====================================
+   GREETING PAGE BUTTON
+   ===================================== */
 
 .image-hotspot {
   position: absolute;
@@ -86,7 +84,6 @@ button:hover {
   transform: translateX(-50%);
   width: 13%;
   height: 9%;
-
   padding: 0;
   background: transparent;
   border: none;
@@ -103,7 +100,10 @@ button:hover {
   outline: 3px solid #e75480;
   outline-offset: 2px;
 }
-/* ANIMATED SELECTION WHEEL */
+
+/* =====================================
+   ANIMATED SELECTION WHEEL
+   ===================================== */
 
 #wheel-controls[hidden] {
   display: none;
@@ -111,15 +111,17 @@ button:hover {
 
 .wheel-window {
   position: absolute;
-  left: 41.5%;
-  top: 25.5%;
-  width: 17%;
-  height: 45%;
+  left: 37%;
+  top: 23%;
+  width: 26%;
+  height: 46%;
   overflow: hidden;
   z-index: 3;
-  border-radius: 20px;
+  border-radius: 22px;
   background: #ffe9dc;
   --row-height: 25%;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 #wheel-track {
@@ -132,17 +134,20 @@ button:hover {
 }
 
 .wheel-option {
+  width: 100%;
   height: 25%;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 7%;
-  padding: 2%;
-  font-size: clamp(8px, 1.15vw, 22px);
+  padding: 2% 5%;
+  font-size: clamp(10px, 1.15vw, 22px);
   font-weight: bold;
   color: #3c2220;
   background: #fff0e5;
-  border-radius: 18px;
+  border-radius: 22px;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .wheel-option.selected {
@@ -154,204 +159,83 @@ button:hover {
   font-size: 1.6em;
 }
 
+/* =====================================
+   WHEEL CLICKABLE BUTTONS
+   ===================================== */
+
 .wheel-click {
   position: absolute;
-  background: transparent;
-  border: 0;
   padding: 0;
-  z-index: 5;
+  background: transparent;
+  border: none;
   cursor: pointer;
+  z-index: 15;
 }
 
 .wheel-click:hover {
-  background: rgba(255,255,255,0.12);
+  background: transparent;
 }
+
+/* Up arrow */
 
 .wheel-click.up {
-  left: 47.5%;
+  left: 47.6%;
   top: 14%;
-  width: 6%;
-  height: 9%;
+  width: 5.2%;
+  height: 8%;
+  border-radius: 50%;
 }
+
+/* Down arrow */
 
 .wheel-click.down {
-  left: 47.5%;
+  left: 47.6%;
   top: 67%;
-  width: 6%;
-  height: 9%;
+  width: 5.2%;
+  height: 7%;
+  border-radius: 50%;
 }
+
+/* Surprise Me */
 
 .wheel-click.surprise {
-  left: 38%;
-  top: 76%;
-  width: 24%;
+  left: 38.5%;
+  top: 75%;
+  width: 23%;
   height: 8%;
+  border-radius: 40px;
 }
 
+/* Confirm */
+
 .wheel-click.confirm {
-  left: 38%;
+  left: 38.5%;
   top: 85%;
-  width: 24%;
+  width: 23%;
   height: 8%;
+  border-radius: 40px;
 }
+
+/* Back */
 
 .wheel-click.back {
   left: 2%;
   top: 14%;
   width: 12%;
   height: 9%;
-}
-/* ===================================
-   WHEEL POSITIONING AND ALIGNMENT
-   =================================== */
-
-/* Animated wheel window */
-.wheel-window {
-  left: 37%;
-  top: 23%;
-  width: 26%;
-  height: 46%;
-  border-radius: 22px;
-  background: #ffe9dc;
-  z-index: 3;
+  border-radius: 30px;
 }
 
-/* Category options */
-.wheel-option {
-  width: 100%;
-  border-radius: 22px;
-  font-size: clamp(10px, 1.15vw, 22px);
-  padding: 2% 5%;
+/* =====================================
+   TEMPORARY ALIGNMENT DEBUGGING
+   ===================================== */
+
+#wheel-controls .wheel-click {
+  background: rgba(255, 0, 0, 0.12) !important;
+  border: 2px solid red !important;
+  box-shadow: none !important;
 }
 
-/* Prevent text highlighting when dragging */
-.wheel-window,
-.wheel-option {
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-/* Up arrow */
-.wheel-click.up {
-  left: 47.6%;
-  top: 14%;
-  width: 5.2%;
-  height: 8%;
-  border-radius: 50%;
-  z-index: 15;
-}
-
-/* Down arrow */
-.wheel-click.down {
-  left: 47.6%;
-  top: 66%;
-  width: 5.2%;
-  height: 8%;
-  border-radius: 50%;
-  z-index: 15;
-}
-
-/* Surprise Me button */
-.wheel-click.surprise {
-  left: 39%;
-  top: 74%;
-  width: 22%;
-  height: 8%;
-  border-radius: 40px;
-  z-index: 15;
-}
-
-/* Confirm button */
-.wheel-click.confirm {
-  left: 39%;
-  top: 83%;
-  width: 22%;
-  height: 9%;
-  border-radius: 40px;
-  z-index: 15;
-}
-/* FINAL BUTTON ALIGNMENT ADJUSTMENTS */
-
-/* Bottom arrow */
-.wheel-click.down {
-  top: 65%;
-  height: 7%;
-}
-
-/* Surprise Me */
-.wheel-click.surprise {
-  top: 73%;
-  height: 8%;
-}
-
-/* Confirm */
-.wheel-click.confirm {
-  top: 82%;
-  height: 8%;
-}
-
-/* Remove the visible translucent hover boxes */
-.wheel-click:hover {
-  background: transparent;
-}
-/* BUTTON ALIGNMENT DEBUGGING */
-
-.wheel-click {
-  background: rgba(255, 0, 0, 0.35) !important;
-  border: 3px solid red !important;
-  box-shadow: 0 0 0 2px yellow !important;
-  opacity: 1 !important;
-}
-
-.wheel-click:hover {
-  background: rgba(255, 0, 0, 0.5) !important;
-}
-body {
-  outline: 10px solid red !important;
-  outline-offset: -10px;
-}
-/* FINAL HOTSPOT POSITION CORRECTIONS */
-
-.wheel-click.down {
-  top: 67%;
-  height: 7%;
-}
-
-.wheel-click.surprise {
-  left: 38.5%;
-  top: 72%;
-  width: 23%;
-  height: 8%;
-}
-
-.wheel-click.confirm {
-  left: 38.5%;
-  top: 81%;
-  width: 23%;
-  height: 8%;
-}
-/* Final screen-fit adjustment */
-
-html,
-body {
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.image-wrapper {
-  width: auto;
-  height: auto;
-  max-width: 100vw;
-  max-height: 100dvh;
-  aspect-ratio: auto;
-}
-
-.page-background {
-  width: auto;
-  height: auto;
-  max-width: 100vw;
-  max-height: 100dvh;
-  object-fit: contain;
+#wheel-controls .wheel-click:hover {
+  background: rgba(255, 0, 0, 0.18) !important;
 }
