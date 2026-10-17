@@ -61,3 +61,37 @@ button:hover {
     height: auto;
   }
 }
+
+/* Clickable areas over the artwork */
+
+.image-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.image-hotspot {
+  position: absolute;
+  display: block;
+  left: 50%;
+  top: 62%;
+  transform: translateX(-50%);
+  width: 13%;
+  height: 9%;
+
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.image-hotspot:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.image-hotspot:focus-visible {
+  outline: 3px solid #e75480;
+  outline-offset: 2px;
+}
+
