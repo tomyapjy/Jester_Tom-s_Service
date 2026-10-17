@@ -192,8 +192,11 @@ button:hover {
   width: 12%;
   height: 9%;
 }
-/* Wheel alignment adjustments */
+/* ===================================
+   WHEEL POSITIONING AND ALIGNMENT
+   =================================== */
 
+/* Animated wheel window */
 .wheel-window {
   left: 37%;
   top: 23%;
@@ -204,8 +207,7 @@ button:hover {
   z-index: 3;
 }
 
-/* Keep the category boxes inside the wheel frame */
-
+/* Category options */
 .wheel-option {
   width: 100%;
   border-radius: 22px;
@@ -213,86 +215,49 @@ button:hover {
   padding: 2% 5%;
 }
 
-/* Keep the wheel arrows above the animated categories */
-
-.wheel-click.up,
-.wheel-click.down {
-  z-index: 15;
-}
-
-.wheel-click.up {
-  left: 45%;
-  top: 10%;
-  width: 10%;
-  height: 10%;
-}
-
-.wheel-click.down {
-  left: 45%;
-  top: 65%;
-  width: 10%;
-  height: 9%;
-}
-
-/* Align Surprise Me with the artwork */
-
-.wheel-click.surprise {
-  left: 33%;
-  top: 73%;
-  width: 34%;
-  height: 9%;
-}
-
-/* Align Confirm with the artwork */
-
-.wheel-click.confirm {
-  left: 33%;
-  top: 83%;
-  width: 34%;
-  height: 10%;
-}
-
-/* Prevent accidental text selection while dragging */
-
+/* Prevent text highlighting when dragging */
 .wheel-window,
 .wheel-option {
   user-select: none;
   -webkit-user-select: none;
 }
-/* FINAL WHEEL BUTTON ALIGNMENT */
 
 /* Up arrow */
 .wheel-click.up {
   left: 47.6%;
-  top: 15%;
+  top: 14%;
   width: 5.2%;
   height: 8%;
   border-radius: 50%;
+  z-index: 15;
 }
 
 /* Down arrow */
 .wheel-click.down {
   left: 47.6%;
-  top: 69%;
+  top: 66%;
   width: 5.2%;
-  height: 5%;
+  height: 8%;
   border-radius: 50%;
+  z-index: 15;
 }
 
-/* Surprise Me */
+/* Surprise Me button */
 .wheel-click.surprise {
-  left: 38%;
-  top: 77%;
-  width: 24%;
+  left: 39%;
+  top: 74%;
+  width: 22%;
   height: 8%;
   border-radius: 40px;
+  z-index: 15;
 }
 
-/* Confirm */
+/* Confirm button */
 .wheel-click.confirm {
-  left: 38%;
-  top: 86%;
-  width: 24%;
-  height: 8%;
+  left: 39%;
+  top: 83%;
+  width: 22%;
+  height: 9%;
   border-radius: 40px;
+  z-index: 15;
 }
