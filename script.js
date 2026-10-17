@@ -107,6 +107,7 @@ const sleep = ms =>
 function hideConfirmation() {
   confirmationDetails.hidden = true;
   confirmationHomeButton.hidden = true;
+  updateAppointmentsLink();
 }
 
 function showGreeting() {
@@ -734,7 +735,9 @@ function updateAppointmentsLink() {
 
   const isGreeting = currentImage.includes("greeting");
   const isWheel = currentImage.includes("wheels");
-  const isConfirmation = currentImage.includes("booking confirmed");
+  const isConfirmation =
+  currentImage.includes("booking confirmed") ||
+  !confirmationDetails.hidden;
 
   appointmentsLink.hidden = !(
     isGreeting || isWheel || isConfirmation
