@@ -1,5 +1,5 @@
 
-/* Jester Tom's Service - Animated Slot Machine Wheel */
+/* Jester Tom's Service - Free Scrolling Wheel */
 
 const categories = [
   { name: "Massage appointment", icon: "🌸" },
@@ -10,16 +10,30 @@ const categories = [
 
 let selectedIndex = 1;
 let spinning = false;
-let touchStartY = null;
+let dragging = false;
+let dragStartY = 0;
+let dragDistance = 0;
+let dragSteps = 0;
 
-const sleep = ms =>
-  new Promise(resolve => setTimeout(resolve, ms));
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 const image = document.getElementById("page-image");
 const getStartedButton = document.getElementById("get-started");
 const wheelControls = document.getElementById("wheel-controls");
 const wheelTrack = document.getElementById("wheel-track");
 const wheelWindow = document.querySelector(".wheel-window");
+
+wheelWindow.style.cursor = "grab";
+wheelWindow.style.touchAction = "none";
+
+function wrapIndex(index) {
+  return ((index % categories.length) + categories.length)
+    % categories.length;
+}
+
+function rowHeight() {
+  return wheelWindow.getBoundingClientRect().height / 4;
+}
 
 function showWheel() {
   image.src = "assets/morning/morning wheels page.png";
@@ -32,25 +46,22 @@ function showWheel() {
 
   selectedIndex = 1;
   spinning = false;
+  dragging = false;
 
   buildWheel();
 }
 
-function buildWheel() {
+/* Draw extra rows above and below so dragging is continuous */
+function buildWheel(offset = 0) {
   wheelTrack.innerHTML = "";
 
-  // Five rows: two above, selected row, two below.
-  for (let offset = -2; offset <= 2; offset++) {
-    const index =
-      (selectedIndex + offset + categories.length) %
-      categories.length;
+  for (let position = -3; position <= 5; position++) {
+    const category = categories[wrapIndex(selectedIndex + position)];
 
-    const category = categories[index];
     const row = document.createElement("div");
-
     row.className = "wheel-option";
 
-    if (offset === 0) {
+    if (position === 0) {
       row.classList.add("selected");
     }
 
@@ -65,78 +76,137 @@ function buildWheel() {
     wheelTrack.appendChild(row);
   }
 
-  // Each row occupies 25% of the wheel window.
-  // Position the selected row in the second visible slot.
   wheelTrack.style.transition = "none";
-  wheelTrack.style.transform = "translateY(-25%)";
+
+  // The selected row is positioned in the second visible slot.
+  const y = -2 * rowHeight() + offset;
+  wheelTrack.style.transform = `translateY(${y}px)`;
 }
 
-async function animateStep(direction, duration = 350) {
-  const startPosition = -25;
-  const endPosition = direction > 0 ? -50 : 0;
+/* Move by any number of options */
+function moveWheel(direction) {
+  if (spinning || dragging || wheelControls.hidden) return;
 
-  wheelTrack.style.transition = "none";
-  wheelTrack.style.transform =
-    `translateY(${startPosition}%)`;
-
-  // Force the browser to apply the starting position.
-  void wheelTrack.offsetHeight;
-
-  wheelTrack.style.transition =
-    `transform ${duration}ms ease-in-out`;
-
-  wheelTrack.style.transform =
-    `translateY(${endPosition}%)`;
-
-  await sleep(duration + 30);
-
-  selectedIndex =
-    (selectedIndex + direction + categories.length) %
-    categories.length;
-
+  selectedIndex = wrapIndex(selectedIndex + direction);
   buildWheel();
 }
 
-async function moveWheel(direction) {
+/* Dragging the wheel */
+wheelWindow.addEventListener("pointerdown", event => {
   if (spinning || wheelControls.hidden) return;
 
-  spinning = true;
+  dragging = true;
+  dragStartY = event.clientY;
+  dragDistance = 0;
+  dragSteps = 0;
 
-  await animateStep(direction);
+  wheelWindow.setPointerCapture(event.pointerId);
+  wheelWindow.style.cursor = "grabbing";
 
-  spinning = false;
+  event.preventDefault();
+});
+
+wheelWindow.addEventListener("pointermove", event => {
+  if (!dragging) return;
+
+  dragDistance = event.clientY - dragStartY;
+
+  const height = rowHeight();
+
+  // Determine how many complete rows have been dragged.
+  const steps = Math.round(-dragDistance / height);
+
+  if (steps !== dragSteps) {
+    selectedIndex = wrapIndex(selectedIndex + steps - dragSteps);
+    dragSteps = steps;
+  }
+
+  // Keep the wheel moving directly with the mouse.
+  const remainder = dragDistance + dragSteps * height;
+
+  buildWheel(remainder);
+});
+
+function finishDrag() {
+  if (!dragging) return;
+
+  dragging = false;
+  wheelWindow.style.cursor = "grab";
+
+  const height = rowHeight();
+  const remainder = dragDistance + dragSteps * height;
+
+  // Settle smoothly on the selected row.
+  wheelTrack.style.transition = "transform 180ms ease-out";
+  wheelTrack.style.transform = `translateY(${-2 * height}px)`;
+
+  dragDistance = 0;
+  dragSteps = 0;
 }
 
+wheelWindow.addEventListener("pointerup", finishDrag);
+wheelWindow.addEventListener("pointercancel", finishDrag);
+
+/* Mouse wheel scrolling */
+wheelWindow.addEventListener("wheel", event => {
+  event.preventDefault();
+
+  if (spinning || dragging || wheelControls.hidden) return;
+
+  // Larger scroll movements can pass multiple categories.
+  const amount = Math.max(1, Math.round(Math.abs(event.deltaY) / 60));
+
+  const direction = event.deltaY > 0 ? 1 : -1;
+
+  moveWheel(direction * amount);
+}, { passive: false });
+
+/* Click a category directly */
+wheelTrack.addEventListener("click", event => {
+  if (spinning || dragging || wheelControls.hidden) return;
+
+  const row = event.target.closest(".wheel-option");
+  if (!row) return;
+
+  const rows = Array.from(wheelTrack.children);
+  const position = rows.indexOf(row);
+
+  // The selected category is the fourth generated row.
+  const difference = position - 3;
+
+  if (difference !== 0) {
+    moveWheel(difference);
+  }
+});
+
+/* Surprise Me: spin before selecting a random date */
 async function surpriseMe() {
-  if (spinning || wheelControls.hidden) return;
+  if (spinning || dragging || wheelControls.hidden) return;
 
   spinning = true;
 
-  // Surprise Me chooses only Outing, Indoor or Food.
+  // Excludes Massage appointment.
   const destination = Math.floor(Math.random() * 3) + 1;
 
-  // Complete multiple rotations before stopping.
-  const distance =
-    (destination - selectedIndex + categories.length) %
-    categories.length;
-
+  const distance = wrapIndex(destination - selectedIndex);
   const totalSteps = 12 + distance;
 
   for (let step = 0; step < totalSteps; step++) {
+    selectedIndex = wrapIndex(selectedIndex + 1);
+    buildWheel();
+
     const progress = step / totalSteps;
+    const delay = Math.round(65 + 280 * progress * progress);
 
-    // Fast at first, then gradually slow down.
-    const duration =
-      Math.round(85 + 380 * progress * progress);
-
-    await animateStep(1, duration);
+    await sleep(delay);
   }
 
   spinning = false;
 }
 
+/* Confirm the selected category */
 function confirmSelection() {
-  if (spinning || wheelControls.hidden) return;
+  if (spinning || dragging || wheelControls.hidden) return;
 
   const pages = [
     "assets/morning/morning massage page.png",
@@ -151,8 +221,11 @@ function confirmSelection() {
   wheelControls.hidden = true;
 }
 
+/* Return to the greeting page */
 function goBack() {
   if (spinning) return;
+
+  dragging = false;
 
   image.src = "assets/morning/Morning greetings page.png";
   image.alt = "Jester Tom's Service Greeting Page";
@@ -162,99 +235,3 @@ function goBack() {
   getStartedButton.hidden = false;
   getStartedButton.style.display = "block";
 }
-
-// Mouse scroll support
-wheelWindow.addEventListener(
-  "wheel",
-  event => {
-    event.preventDefault();
-
-    if (spinning || wheelControls.hidden) return;
-
-    moveWheel(event.deltaY > 0 ? 1 : -1);
-  },
-  { passive: false }
-);
-
-// Touch swipe support
-wheelWindow.addEventListener(
-  "touchstart",
-  event => {
-    touchStartY = event.touches[0].clientY;
-  },
-  { passive: true }
-);
-
-wheelWindow.addEventListener(
-  "touchend",
-  event => {
-    if (touchStartY === null) return;
-
-    const difference =
-      touchStartY - event.changedTouches[0].clientY;
-
-    touchStartY = null;
-
-    if (Math.abs(difference) > 20) {
-      moveWheel(difference > 0 ? 1 : -1);
-    }
-  },
-  { passive: true }
-);
-/* Mouse drag support for the selection wheel */
-
-let dragStartY = null;
-let isDraggingWheel = false;
-
-wheelWindow.style.cursor = "grab";
-wheelWindow.style.touchAction = "none";
-
-wheelWindow.addEventListener("pointerdown", event => {
-  if (spinning || wheelControls.hidden) return;
-
-  dragStartY = event.clientY;
-  isDraggingWheel = true;
-
-  wheelWindow.setPointerCapture(event.pointerId);
-  wheelWindow.style.cursor = "grabbing";
-});
-
-wheelWindow.addEventListener("pointerup", event => {
-  if (!isDraggingWheel || dragStartY === null) return;
-
-  const distance = dragStartY - event.clientY;
-
-  isDraggingWheel = false;
-  dragStartY = null;
-  wheelWindow.style.cursor = "grab";
-
-  if (Math.abs(distance) > 20) {
-    moveWheel(distance > 0 ? 1 : -1);
-  }
-});
-
-wheelWindow.addEventListener("pointercancel", () => {
-  isDraggingWheel = false;
-  dragStartY = null;
-  wheelWindow.style.cursor = "grab";
-});
-/* Click directly on a wheel category to select it */
-
-wheelTrack.addEventListener("click", event => {
-  if (spinning || wheelControls.hidden) return;
-
-  const clickedRow = event.target.closest(".wheel-option");
-  if (!clickedRow) return;
-
-  const rows = Array.from(wheelTrack.children);
-  const clickedPosition = rows.indexOf(clickedRow);
-
-  // Our wheel contains five rows.
-  // The selected category is the middle row (index 2).
-  const difference = clickedPosition - 2;
-
-  if (difference === 0) return;
-
-  // Move toward the clicked category.
-  moveWheel(difference > 0 ? 1 : -1);
-});
