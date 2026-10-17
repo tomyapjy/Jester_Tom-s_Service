@@ -1,1 +1,24 @@
+/* Jester Tom's Service */
 
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #fff0f5;
+  text-align: center;
+}
+
+h1 {
+  color: #e75480;
+}
+
+button {
+  background-color: #ffb6c1;
+  border: none;
+  border-radius: 20px;
+  padding: 12px 25px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #ff91a4;
+}
