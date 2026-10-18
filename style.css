@@ -1154,3 +1154,86 @@ button:hover {
     font-size: clamp(10px, 2vw, 14px);
   }
 }
+
+/* =====================================
+   WISHLIST INTERACTIVE FORM
+   ===================================== */
+
+#wishlist-form[hidden] {
+  display: none !important;
+}
+
+.image-wrapper.wishlist-page #wishlist-form {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 600;
+  pointer-events: none;
+}
+
+#wishlist-item,
+#wishlist-notes,
+#wishlist-confirm {
+  position: absolute;
+  box-sizing: border-box;
+  pointer-events: auto;
+  font-family: Arial, sans-serif;
+}
+
+/* Item name input */
+#wishlist-item {
+  left: 27%;
+  top: 49%;
+  width: 17%;
+  height: 6%;
+  padding: 0 1%;
+  border: 1px solid #ffc2d3;
+  border-radius: 12px;
+  background: #fff8fa;
+  color: #a52c57;
+}
+
+/* Optional notes */
+#wishlist-notes {
+  left: 45%;
+  top: 49%;
+  width: 14%;
+  height: 6%;
+  padding: 0.5%;
+  resize: none;
+  border: 1px solid #ffc2d3;
+  border-radius: 12px;
+  background: #fff8fa;
+  color: #a52c57;
+}
+
+/* Confirm button */
+#wishlist-confirm {
+  left: 72%;
+  top: 49%;
+  width: 9%;
+  height: 6%;
+  border: none;
+  border-radius: 30px;
+  background: #ff4381;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#wishlist-confirm:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* Submission message */
+#wishlist-status {
+  position: absolute;
+  left: 28%;
+  top: 57%;
+  width: 50%;
+  margin: 0;
+  color: #a52c57;
+  font-size: clamp(10px, 1vw, 15px);
+  text-align: center;
+}

@@ -35,6 +35,29 @@
   aria-label="Back to previous page"
   hidden
 ></button>
+
+<!-- Interactive Wishlist Form -->
+<form id="wishlist-form" hidden>
+  <input
+    id="wishlist-item"
+    type="text"
+    placeholder="E.g. Jirachi plushie"
+    maxlength="100"
+    required
+  >
+
+  <textarea
+    id="wishlist-notes"
+    placeholder="E.g. Medium size, official merchandise"
+    maxlength="500"
+  ></textarea>
+
+  <button id="wishlist-confirm" type="submit">
+    Confirm
+  </button>
+
+  <p id="wishlist-status" aria-live="polite"></p>
+</form>
       <!-- Appointments navigation hotspot -->
         <button
          id="appointments-link"

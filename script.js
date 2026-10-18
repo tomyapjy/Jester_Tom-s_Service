@@ -974,9 +974,11 @@ function showWishlist() {
 
   wishlistLink.hidden = true;
   wishlistBack.hidden = false;
+  document.getElementById("wishlist-form").hidden = false;
 }
 
 function backFromWishlist() {
+  document.getElementById("wishlist-form").hidden = true;
   wishlistBack.hidden = true;
   wrapper.classList.remove("wishlist-page");
 
@@ -989,3 +991,58 @@ function backFromWishlist() {
 
 image.addEventListener("load", updateWishlistLink);
 updateWishlistLink();
+
+/* =====================================
+   WISHLIST TELEGRAM SUBMISSION
+   ===================================== */
+
+const WISHLIST_FUNCTION_URL =
+  "https://kmmogejcdhnxfptjwent.supabase.co/functions/v1/submit-wishlist";
+
+const wishlistForm = document.getElementById("wishlist-form");
+const wishlistItem = document.getElementById("wishlist-item");
+const wishlistNotes = document.getElementById("wishlist-notes");
+const wishlistConfirm = document.getElementById("wishlist-confirm");
+const wishlistStatus = document.getElementById("wishlist-status");
+
+wishlistForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const item_name = wishlistItem.value.trim();
+  const notes = wishlistNotes.value.trim();
+
+  if (!item_name) {
+    wishlistStatus.textContent = "Please enter an item name.";
+    return;
+  }
+
+  wishlistConfirm.disabled = true;
+  wishlistStatus.textContent = "Sending wishlist...";
+
+  try {
+    const response = await fetch(WISHLIST_FUNCTION_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        item_name,
+        notes
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error("Wishlist submission failed");
+    }
+
+    wishlistStatus.textContent = "Wishlist submitted successfully! ♡";
+    wishlistForm.reset();
+
+  } catch (error) {
+    console.error(error);
+    wishlistStatus.textContent =
+      "Unable to submit. Please try again.";
+  } finally {
+    wishlistConfirm.disabled = false;
+  }
+});
