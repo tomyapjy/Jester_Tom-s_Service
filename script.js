@@ -714,8 +714,8 @@ function showAppointments() {
   appointmentsMonth = new Date().getMonth();
   appointmentsYear = new Date().getFullYear();
 
-  appointmentsUI.hidden = false;
-  renderAppointmentsCalendar();
+ appointmentsUI.hidden = false;
+  loadBookedAppointmentDates();
 
   appointmentsDetails.textContent =
   "Select a date to view your appointments.";
@@ -844,6 +844,13 @@ function renderAppointmentsCalendar() {
       `${String(day).padStart(2, "0")}`;
 
     if (date === selectedAppointmentDate) {
+      if (!bookedAppointmentDates.has(date)) {
+  button.disabled = true;
+  button.style.opacity = "0.45";
+  button.style.cursor = "default";
+} else {
+  button.style.fontWeight = "bold";
+}
       button.classList.add("selected");
     }
 
@@ -874,7 +881,7 @@ function changeAppointmentsMonth(direction) {
   selectedAppointmentDate = null;
 
   updateAppointmentsBackground();
-  renderAppointmentsCalendar();
+loadBookedAppointmentDates();
 
   appointmentsDetails.textContent =
     "Select a date to view your appointments.";
@@ -911,11 +918,9 @@ async function showAppointmentPlans(date) {
     appointmentsDetails.replaceChildren(heading);
 
     if (!data || data.length === 0) {
-      const empty = document.createElement("p");
-      empty.textContent = "No appointments scheduled for this date.";
-      appointmentsDetails.appendChild(empty);
-      return;
-    }
+  appointmentsDetails.replaceChildren();
+  return;
+}
 
     data.forEach((booking) => {
       const entry = document.createElement("div");
@@ -977,13 +982,43 @@ appointmentsMonthButton.addEventListener("click", () => {
   appointmentsMonth = Number(match[1]) - 1;
   appointmentsYear = year;
   selectedAppointmentDate = null;
+  let bookedAppointmentDates = new Set();
+let appointmentsLoadVersion = 0;
 
-  updateAppointmentsBackground();
+async function loadBookedAppointmentDates() {
+  const version = ++appointmentsLoadVersion;
+  const year = appointmentsYear;
+  const month = appointmentsMonth;
+
+  const start = `${year}-${String(month + 1).padStart(2, "0")}-01`;
+  const end = new Date(year, month + 1, 0);
+  const finish = `${year}-${String(month + 1).padStart(2, "0")}-${String(end.getDate()).padStart(2, "0")}`;
+
+  bookedAppointmentDates = new Set();
   renderAppointmentsCalendar();
 
-  appointmentsDetails.textContent =
-    "Select a date to view your appointments.";
-});
+  const { data, error } = await appointmentsSupabase
+    .from("bookings")
+    .select("booking_date")
+    .gte("booking_date", start)
+    .lte("booking_date", finish);
+
+  if (version !== appointmentsLoadVersion) return;
+
+  if (error) {
+    console.error("Unable to load appointment dates:", error);
+    appointmentsDetails.textContent = "Unable to load appointments.";
+    return;
+  }
+
+  bookedAppointmentDates = new Set(data.map(row => row.booking_date));
+  renderAppointmentsCalendar();
+}
+
+  updateAppointmentsBackground();
+loadBookedAppointmentDates();
+
+  appointmentsDetails.textContent = "";
 
 /* =====================================
    WISHLIST NAVIGATION
