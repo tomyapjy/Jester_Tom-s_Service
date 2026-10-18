@@ -774,6 +774,11 @@ updateAppointmentsLink();
    INTERACTIVE APPOINTMENTS CALENDAR
    ===================================== */
 
+   const appointmentsSupabase = window.supabase.createClient(
+  "https://kmmogejcdhnxfptjwent.supabase.co",
+  "sb_publishable_Jv1kYD7eB_8lqInOg5EBKw_t_FPYuAk"
+);
+
 const appointmentsUI =
   document.getElementById("appointments-ui");
 
@@ -875,8 +880,9 @@ function changeAppointmentsMonth(direction) {
     "Select a date to view your appointments.";
 }
 
-function showAppointmentPlans(date) {
+async function showAppointmentPlans(date) {
   const heading = document.createElement("h3");
+
   heading.textContent = new Date(
     `${date}T12:00:00`
   ).toLocaleDateString("en-SG", {
@@ -885,11 +891,59 @@ function showAppointmentPlans(date) {
     year: "numeric"
   });
 
-  const message = document.createElement("p");
-  message.textContent =
-    "Appointment details will appear here once connected to your saved bookings.";
+  appointmentsDetails.replaceChildren(heading);
 
-  appointmentsDetails.replaceChildren(heading, message);
+  const loading = document.createElement("p");
+  loading.textContent = "Loading appointments...";
+  appointmentsDetails.appendChild(loading);
+
+  try {
+    const { data, error } = await appointmentsSupabase
+      .from("bookings")
+      .select("category, booking_date, comments, status")
+      .eq("booking_date", date);
+
+    if (error) throw error;
+
+    // Ignore results if another date was selected meanwhile.
+    if (selectedAppointmentDate !== date) return;
+
+    appointmentsDetails.replaceChildren(heading);
+
+    if (!data || data.length === 0) {
+      const empty = document.createElement("p");
+      empty.textContent = "No appointments scheduled for this date.";
+      appointmentsDetails.appendChild(empty);
+      return;
+    }
+
+    data.forEach((booking) => {
+      const entry = document.createElement("div");
+      entry.className = "appointment-entry";
+
+      const category = document.createElement("strong");
+      category.textContent = booking.category;
+
+      const comments = document.createElement("p");
+      comments.textContent =
+        booking.comments || "No additional suggestions.";
+
+      const status = document.createElement("p");
+      status.textContent = `Status: ${booking.status}`;
+
+      entry.append(category, comments, status);
+      appointmentsDetails.appendChild(entry);
+    });
+
+  } catch (error) {
+    console.error("Error loading appointments:", error);
+
+    if (selectedAppointmentDate !== date) return;
+
+    const message = document.createElement("p");
+    message.textContent = "Unable to load appointments.";
+    appointmentsDetails.replaceChildren(heading, message);
+  }
 }
 
 document.getElementById("appointments-prev-month")
