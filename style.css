@@ -1237,3 +1237,73 @@ button:hover {
   font-size: clamp(10px, 1vw, 15px);
   text-align: center;
 }
+
+/* =====================================
+   WISHLIST INPUT ALIGNMENT FIX
+   ===================================== */
+
+/* Item Name — align with background field */
+.image-wrapper.wishlist-page #wishlist-item {
+  position: absolute;
+  left: 25.5%;
+  top: 39.7%;
+  width: 17.5%;
+  height: 6.8%;
+  padding: 0 12px;
+  border: 1px solid #ffd1dc;
+  border-radius: 12px;
+  background: #fff7f9;
+  font-family: Arial, sans-serif;
+  font-size: clamp(10px, 0.9vw, 15px);
+  pointer-events: auto;
+}
+
+/* Notes — align with background field */
+.image-wrapper.wishlist-page #wishlist-notes {
+  position: absolute;
+  left: 44.1%;
+  top: 39.7%;
+  width: 14.6%;
+  height: 6.8%;
+  padding: 12px;
+  border: 1px solid #ffd1dc;
+  border-radius: 12px;
+  background: #fff7f9;
+  font-family: Arial, sans-serif;
+  font-size: clamp(10px, 0.9vw, 15px);
+  resize: none;
+  pointer-events: auto;
+}
+
+/* Confirm — invisible hotspot over original button */
+.image-wrapper.wishlist-page #wishlist-confirm {
+  position: absolute;
+  left: 71.7%;
+  top: 39.3%;
+  width: 8.7%;
+  height: 7.3%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: transparent;
+  font-size: 0;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+/* Keep Confirm invisible on hover */
+.image-wrapper.wishlist-page #wishlist-confirm:hover {
+  background: transparent;
+}
+
+/* Submission message — below input row */
+.image-wrapper.wishlist-page #wishlist-status {
+  position: absolute;
+  left: 44%;
+  top: 47.5%;
+  width: 25%;
+  margin: 0;
+  color: #d63370;
+  font-size: clamp(10px, 0.85vw, 14px);
+  pointer-events: none;
+}
