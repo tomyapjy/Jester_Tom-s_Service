@@ -982,7 +982,14 @@ appointmentsMonthButton.addEventListener("click", () => {
   appointmentsMonth = Number(match[1]) - 1;
   appointmentsYear = year;
   selectedAppointmentDate = null;
-  let bookedAppointmentDates = new Set();
+
+  updateAppointmentsBackground();
+  loadBookedAppointmentDates();
+
+  appointmentsDetails.textContent = "";
+});
+
+let bookedAppointmentDates = new Set();
 let appointmentsLoadVersion = 0;
 
 async function loadBookedAppointmentDates() {
@@ -990,9 +997,13 @@ async function loadBookedAppointmentDates() {
   const year = appointmentsYear;
   const month = appointmentsMonth;
 
-  const start = `${year}-${String(month + 1).padStart(2, "0")}-01`;
+  const start =
+    `${year}-${String(month + 1).padStart(2, "0")}-01`;
+
   const end = new Date(year, month + 1, 0);
-  const finish = `${year}-${String(month + 1).padStart(2, "0")}-${String(end.getDate()).padStart(2, "0")}`;
+
+  const finish =
+    `${year}-${String(month + 1).padStart(2, "0")}-${String(end.getDate()).padStart(2, "0")}`;
 
   bookedAppointmentDates = new Set();
   renderAppointmentsCalendar();
@@ -1011,14 +1022,12 @@ async function loadBookedAppointmentDates() {
     return;
   }
 
-  bookedAppointmentDates = new Set(data.map(row => row.booking_date));
+  bookedAppointmentDates = new Set(
+    data.map(row => row.booking_date)
+  );
+
   renderAppointmentsCalendar();
 }
-
-  updateAppointmentsBackground();
-loadBookedAppointmentDates();
-
-  appointmentsDetails.textContent = "";
 
 /* =====================================
    WISHLIST NAVIGATION
